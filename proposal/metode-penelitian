@@ -71,7 +71,7 @@
           <mxGeometry width="240" height="110" as="geometry" />
         </mxCell>
         <mxCell id="ewe9jvAsT_gLcPVLkpNA-35" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot; face=&quot;Times New Roman&quot;&gt;Pengujian kinerja, kompatibilitas, dan stabilitas pada sistem&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="ewe9jvAsT_gLcPVLkpNA-36" vertex="1">
-          <mxGeometry x="55" y="30" width="130" height="50" as="geometry" />
+          <mxGeometry x="57.5" y="30" width="125" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ewe9jvAsT_gLcPVLkpNA-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ewe9jvAsT_gLcPVLkpNA-29" target="ewe9jvAsT_gLcPVLkpNA-34" edge="1">
           <mxGeometry relative="1" as="geometry" />
