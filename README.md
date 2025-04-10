@@ -1,4 +1,4 @@
 # tugas_akhir
 Repositori Tugas Akhir  
-Tema: Implementasi Pick and Place Motion Control Robot Lengan Kuka Berbasis ROS (observasi gerakan)  
-Judul: Implementasi ROS 2 Jazzy Jalisco Pada Robot Lengan KUKA KR 5 sixx R650
+Tema: Implementasi Image Processing pada Robot Lengan Yaskawa Berbasis ROS
+Judul: Perancangan Sistem Penyelesaian Rubik 3x3 dengan Algoritma Kociemba Menggunakan Robot Lengan Berbasis Image Processing
