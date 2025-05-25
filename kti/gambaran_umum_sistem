@@ -1,43 +1,48 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.0.9">
   <diagram name="Page-1" id="VB-f_qGyGmxetDPx4SS0">
-    <mxGraphModel dx="1317" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1701" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="L81m7d5NbDIC0c6kGh_W-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="L81m7d5NbDIC0c6kGh_W-1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="510" y="90" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="wUhYYIfqf4YsKYixwUtr-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="L81m7d5NbDIC0c6kGh_W-1" target="wUhYYIfqf4YsKYixwUtr-2">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-1" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://pngimg.com/uploads/laptop/laptop_PNG101815.png;" parent="1" vertex="1">
-          <mxGeometry x="330" y="40" width="128.21" height="100" as="geometry" />
+          <mxGeometry x="79.99999999999997" y="300" width="128.21" height="100" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="L81m7d5NbDIC0c6kGh_W-2" target="L81m7d5NbDIC0c6kGh_W-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://asiame.vn/wp-content/uploads/2020/09/Robot-Yaskawa-Motoman-MH5S-II.png;" parent="1" vertex="1">
-          <mxGeometry x="700" y="40" width="93.83" height="100" as="geometry" />
+          <mxGeometry x="279.86" y="460" width="93.83" height="100" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="L81m7d5NbDIC0c6kGh_W-3" target="L81m7d5NbDIC0c6kGh_W-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.pngall.com/wp-content/uploads/2016/04/Rubiks-Cube-PNG-Image.png;" parent="1" vertex="1">
-          <mxGeometry x="30" y="40" width="100" height="100" as="geometry" />
+          <mxGeometry x="94.1" y="50" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="L81m7d5NbDIC0c6kGh_W-5" target="L81m7d5NbDIC0c6kGh_W-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-5" value="WEBCAM LAPTOP" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="180" y="65" width="100" height="50" as="geometry" />
+          <mxGeometry x="94.1" y="200" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="wUhYYIfqf4YsKYixwUtr-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="L81m7d5NbDIC0c6kGh_W-6" target="L81m7d5NbDIC0c6kGh_W-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="485" y="225" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="L81m7d5NbDIC0c6kGh_W-6" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://pngimg.com/uploads/rubik_cube/rubik_cube_PNG19.png;" parent="1" vertex="1">
-          <mxGeometry x="840" y="42.5" width="90.73" height="95" as="geometry" />
+          <mxGeometry x="440" y="462.5" width="90.73" height="95" as="geometry" />
         </mxCell>
         <mxCell id="wUhYYIfqf4YsKYixwUtr-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wUhYYIfqf4YsKYixwUtr-2" target="L81m7d5NbDIC0c6kGh_W-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="wUhYYIfqf4YsKYixwUtr-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.campus-virtual.mineria.unam.mx/Mineria/Cursos/Plc/Unidad2/images/img7.png;" vertex="1" parent="1">
-          <mxGeometry x="510" y="40" width="133.55" height="100" as="geometry" />
+          <mxGeometry x="77.32" y="460" width="133.55" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
