@@ -52,23 +52,23 @@
         <mxCell id="nyj_APtNYX1f8QDApb6_-15" value="Proses perhitungan algoritma menghasilkan langkah penyelesaian" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="400" y="245" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-17" target="nyj_APtNYX1f8QDApb6_-19">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-17" target="nyj_APtNYX1f8QDApb6_-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="nyj_APtNYX1f8QDApb6_-17" value="Langkah penyelesaian diubah menjadi program PLC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="400" y="340" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-19" target="nyj_APtNYX1f8QDApb6_-3">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-19" value="Program PLC memberi sinyal gerakan robot lengan" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="400" y="435" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="nyj_APtNYX1f8QDApb6_-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-22" target="nyj_APtNYX1f8QDApb6_-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="nyj_APtNYX1f8QDApb6_-22" value="Warna tiap sisi rubik dideteksi menggunakan segmentasi HSV" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="200" y="245" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nyj_APtNYX1f8QDApb6_-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-29" target="nyj_APtNYX1f8QDApb6_-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nyj_APtNYX1f8QDApb6_-29" value="Program PLC&lt;div&gt;memberi sinyal&lt;/div&gt;&lt;div&gt;gerakan robot lengan&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="385" y="440" width="150" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
