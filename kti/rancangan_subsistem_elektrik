@@ -13,11 +13,11 @@
         <mxCell id="B1ttWqe05dMcK4hmZMaS-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://assets.robots.com/transforms/controllers/240/Motoman_DX100_Controller_a22a8822370567a9db447446fb18c03c.png;" vertex="1" parent="1">
           <mxGeometry x="373" y="40" width="123.93" height="153.79" as="geometry" />
         </mxCell>
-        <mxCell id="B1ttWqe05dMcK4hmZMaS-4" value="PLC Output&lt;div&gt;100.04 - 100.9&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="80" y="200.26" width="100" height="40" as="geometry" />
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-4" value="PLC Output&lt;div&gt;100.00 - 100.07&lt;/div&gt;&lt;div&gt;101.00 - 101.07&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="75" y="190.26" width="110" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="B1ttWqe05dMcK4hmZMaS-5" value="MXT Input&lt;div&gt;13 - 18&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="394.97" y="200.26" width="80" height="40" as="geometry" />
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-5" value="MXT Input&lt;div&gt;CN 309 1 - 16&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="384.97" y="200.26" width="100" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
