@@ -13,11 +13,23 @@
         <mxCell id="B1ttWqe05dMcK4hmZMaS-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://assets.robots.com/transforms/controllers/240/Motoman_DX100_Controller_a22a8822370567a9db447446fb18c03c.png;" vertex="1" parent="1">
           <mxGeometry x="373" y="40" width="123.93" height="153.79" as="geometry" />
         </mxCell>
-        <mxCell id="B1ttWqe05dMcK4hmZMaS-4" value="PLC Output&lt;div&gt;100.00 - 100.07&lt;/div&gt;&lt;div&gt;101.00 - 101.07&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="75" y="190.26" width="110" height="60" as="geometry" />
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="B1ttWqe05dMcK4hmZMaS-4" target="B1ttWqe05dMcK4hmZMaS-5">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="B1ttWqe05dMcK4hmZMaS-5" value="MXT Input&lt;div&gt;CN 309 1 - 16&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="384.97" y="200.26" width="100" height="40" as="geometry" />
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-4" value="PLC Output" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="85" y="210" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-5" value="MXT Input&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;CN 309&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="374.96" y="210" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-9" value="100.00&lt;div&gt;100.01&lt;/div&gt;&lt;div&gt;100.02&lt;/div&gt;&lt;div&gt;100.03&lt;/div&gt;&lt;div&gt;100.04&lt;/div&gt;&lt;div&gt;100.05&lt;/div&gt;&lt;div&gt;100.06&lt;/div&gt;&lt;div&gt;100.07&lt;/div&gt;&lt;div&gt;101.00&lt;/div&gt;&lt;div&gt;101.01&lt;/div&gt;&lt;div&gt;101.02&lt;/div&gt;&lt;div&gt;101.03&lt;/div&gt;&lt;div&gt;101.04&lt;/div&gt;&lt;div&gt;101.05&lt;/div&gt;&lt;div&gt;101.06&lt;/div&gt;&lt;div&gt;101.07&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="100" y="240" width="60" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-10" value="1&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;&lt;div&gt;6&lt;/div&gt;&lt;div&gt;7&lt;/div&gt;&lt;div&gt;8&lt;/div&gt;&lt;div&gt;9&lt;/div&gt;&lt;div&gt;10&lt;/div&gt;&lt;div&gt;11&lt;/div&gt;&lt;div&gt;12&lt;/div&gt;&lt;div&gt;13&lt;/div&gt;&lt;div&gt;14&lt;/div&gt;&lt;div&gt;15&lt;/div&gt;&lt;div&gt;16&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="414.96" y="240" width="40" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="B1ttWqe05dMcK4hmZMaS-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.031;entryY=0.503;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="B1ttWqe05dMcK4hmZMaS-9" target="B1ttWqe05dMcK4hmZMaS-10">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
