@@ -1,0 +1,61 @@
+source env/bin/activate
+
+putih U
+merah R
+hijau F
+kuning D
+oranye L
+biru B
+
+UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB
+
+R U R2 L' U' D B' R2 L' D' F U R2 U R2 L2 U D2 R2 D
+
+
+BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF
+
+B U' L' D' R' D' L2 D' L F' L' D F2 R2 U R2 B2 U2 L2 F2 D'
+
+F U F U F U F2 U
+
+U' F2 U' F' U' F' U' F'
+
+program yaskawa
+00 > U
+01 > U2
+02 > U'
+03 > F
+04 > F2
+05 > F'
+06 > a+90
+07 > a-90
+08 > b+90
+09 > b+180
+10 > b-90
+11 > b-180
+12 > c+90
+13 > c+180
+14 > c-90
+15 > c-180
+16 >
+B 07, 00,
+U' 05,
+L' 08, 02,
+D' 07, 02,
+R' 07, 02,
+D' 05
+L2 06, 04,
+D' 02
+L 03
+F' 08, 02,
+L' 05
+D 12, 03,
+F2 01
+R2 12, 04
+U 10, 00
+R2 04
+B2 12, 04
+U2 01
+L2 12, 04
+F2 10, 01
+D' 12, 05
