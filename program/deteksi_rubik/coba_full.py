@@ -30,19 +30,30 @@ while True:
 
             # Segmentasi HSV pada ROI
             hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-            # Contoh: threshold warna hijau
-            lower = np.array([35, 50, 50])
-            upper = np.array([85, 255, 255])
-            mask = cv2.inRange(hsv, lower, upper)
 
-            # Temukan kontur pada mask
-            contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            for cnt in contours:
-                area = cv2.contourArea(cnt)
-                if area > 200:  # Filter area kecil
-                    x, y, w, h = cv2.boundingRect(cnt)
-                    # Gambar bounding box pada frame asli (koordinat relatif ROI)
-                    cv2.rectangle(frame, (x1 + x, y1 + y), (x1 + x + w, y1 + y + h), (0, 0, 255), 2)
+            # Definisikan rentang HSV untuk setiap warna Rubik
+            color_ranges = {
+                'U': ([0, 0, 200], [180, 30, 255]),      # Putih
+                'R': ([0, 100, 100], [10, 255, 255]),    # Merah
+                'F': ([35, 50, 50], [85, 255, 255]),     # Hijau
+                'D': ([20, 100, 100], [35, 255, 255]),   # Kuning
+                'L': ([10, 100, 100], [20, 255, 255]),   # Orange
+                'B': ([100, 100, 100], [130, 255, 255]), # Biru
+            }
+
+            detected_piece = None
+            for label, (lower, upper) in color_ranges.items():
+                lower = np.array(lower, dtype=np.uint8)
+                upper = np.array(upper, dtype=np.uint8)
+                mask = cv2.inRange(hsv, lower, upper)
+                area = cv2.countNonZero(mask)
+                if area > 200:  # Threshold area
+                    detected_piece = label
+                    break
+
+            if detected_piece:
+                cv2.putText(frame, detected_piece, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
+                print(f"Piece terdeteksi: {detected_piece}")
 
             # Tampilkan bounding box dan mask
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
