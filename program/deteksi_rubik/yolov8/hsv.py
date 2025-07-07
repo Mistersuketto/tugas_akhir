@@ -25,8 +25,8 @@ def get_limits(color):
     return lowerLimit, upperLimit
 
 
-yellow = [0, 255, 255]  # yellow in BGR colorspace
-cap = cv2.VideoCapture(2)
+yellow = [1, 177, 208]  # yellow in BGR colorspace
+cap = cv2.VideoCapture(0)
 while True:
     ret, frame = cap.read()
 
