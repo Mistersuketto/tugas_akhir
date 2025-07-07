@@ -35,6 +35,15 @@ while True:
             upper = np.array([85, 255, 255])
             mask = cv2.inRange(hsv, lower, upper)
 
+            # Temukan kontur pada mask
+            contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            for cnt in contours:
+                area = cv2.contourArea(cnt)
+                if area > 200:  # Filter area kecil
+                    x, y, w, h = cv2.boundingRect(cnt)
+                    # Gambar bounding box pada frame asli (koordinat relatif ROI)
+                    cv2.rectangle(frame, (x1 + x, y1 + y), (x1 + x + w, y1 + y + h), (0, 0, 255), 2)
+
             # Tampilkan bounding box dan mask
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
             cv2.imshow("HSV Mask", mask)
