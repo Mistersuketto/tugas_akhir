@@ -21,12 +21,12 @@ if not cap.isOpened():
 # Definisikan rentang HSV untuk setiap warna Rubik's Cube
 # Format untuk MERAH diubah untuk menangani rentang hue yang terpisah (0-10 dan 170-180)
 color_ranges = {
-    'U (Putih)': (([0, 0, 180], [180, 40, 255])),
-    'R (Merah)': (([0, 70, 50], [10, 255, 255]), ([170, 70, 50], [180, 255, 255])),
-    'F (Hijau)': (([36, 50, 50], [85, 255, 255])),
-    'D (Kuning)':(([20, 100, 100], [35, 255, 255])),
-    'L (Oranye)':(([11, 100, 100], [19, 255, 255])),
-    'B (Biru)':  (([86, 50, 50], [125, 255, 255]))
+    'U (Putih)': (([0, 0, 150], [180, 50, 255])),
+    'R (Merah)': (([0, 100, 100], [10, 255, 255]), ([160, 100, 100], [180, 255, 255])),
+    'F (Hijau)': (([40, 50, 50], [90, 255, 255])),
+    'D (Kuning)':(([20, 100, 100], [40, 255, 255])),
+    'L (Oranye)':(([10, 100, 100], [25, 255, 255])),
+    'B (Biru)':  (([90, 50, 50], [130, 255, 255]))
 }
 
 def get_color_name(hsv_roi):
