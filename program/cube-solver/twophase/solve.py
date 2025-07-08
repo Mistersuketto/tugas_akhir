@@ -235,40 +235,88 @@ class SolutionManager:
     def _phase_1_search(self, n, depth):
         if time.time() > self._timeout:
             return -2
-        elif self.min_dist_1[n] == 0:
+        
+        # ===== MODIFIKASI =====
+        current_robotic_cost = self.robotic_cost[n]
+        current_orientation = self.orientation[n]
+
+        # Hitung f(n) = g(n) + h(n)
+        # g(n) sekarang adalah biaya robotik kita, bukan lagi jumlah langkah 'n'
+        # h(n) tetap sama, yaitu estimasi dari pruning table
+        h_cost = self._phase_1_cost(n)
+        f_cost = current_robotic_cost + h_cost
+
+        # Jika f_cost melebihi batas, pangkas cabang ini.
+        # Ini adalah jantung dari algoritma A* / IDA*.
+        if f_cost > bound:
+            return -1  # Kembalikan -1 untuk menandakan tidak ada solusi di jalur ini
+
+        # Jika h_cost == 0, berarti tujuan Fase 1 tercapai.
+        if h_cost == 0:
             return self._phase_2_initialise(n)
-        elif self.min_dist_1[n] <= depth:
-            for i in range(6):
-                if n > 0 and self.axis[n - 1] in (i, i + 3):
-                    # don't turn the same face on consecutive moves
-                    # also for opposite faces, e.g. U and D, UD = DU, so we can
-                    # impose that the lower index happens first.
-                    continue
-                for j in range(1, 4):
-                    self.axis[n] = i
-                    self.power[n] = j
-                    mv = 3 * i + j - 1
+        
+        # Loop melalui semua kemungkinan gerakan (6 sisi x 3 putaran)
+        for i in range(6):
+            # Logika untuk tidak memutar sisi yang sama/berlawanan secara berurutan tetap sama
+            if n > 0 and self.axis[n - 1] in (i, i + 3):
+                continue
 
-                    # update coordinates
-                    self.twist[n + 1] = self.tables.twist_move[self.twist[n]][
-                        mv
-                    ]
-                    self.flip[n + 1] = self.tables.flip_move[self.flip[n]][mv]
-                    self.udslice[n + 1] = self.tables.udslice_move[
-                        self.udslice[n]
-                    ][mv]
-                    self.min_dist_1[n + 1] = self._phase_1_cost(n + 1)
+            for j in range(1, 4):
+                # Tentukan karakter gerakan (misal, 'U', 'R', 'F') dari indeks numerik 'i'
+                move_char = Color(i).name
 
-                    # start search from next node
-                    m = self._phase_1_search(n + 1, depth - 1)
-                    if m >= 0:
-                        return m
-                    if m == -2:
-                        # time limit exceeded
-                        return -2
+                # Tentukan biaya dan orientasi selanjutnya berdasarkan aturan robot
+                cost_of_this_move = 0
+                next_orientation = current_orientation
+
+                # Cek apakah gerakan ada di Set H1 untuk orientasi saat ini
+                if move_char in H1_MAP.get(current_orientation, []):
+                    cost_of_this_move = 1
+                else: # Jika tidak, berarti gerakan ini memerlukan re-orientasi dari Set I1
+                    cost_of_this_move = 2
+                    # Dapatkan orientasi baru dari kamus aturan I1_MAP
+                    next_orientation = I1_MAP.get((current_orientation, move_char), current_orientation)
+
+                # Hitung total biaya robotik baru dan simpan ke 'memori'
+                new_robotic_cost = current_robotic_cost + cost_of_this_move
+                self.robotic_cost[n + 1] = new_robotic_cost
+                self.orientation[n + 1] = next_orientation
+                
+        # elif self.min_dist_1[n] == 0:
+        #     return self._phase_2_initialise(n)
+        # elif self.min_dist_1[n] <= depth:
+        #     for i in range(6):
+        #         if n > 0 and self.axis[n - 1] in (i, i + 3):
+        #             # don't turn the same face on consecutive moves
+        #             # also for opposite faces, e.g. U and D, UD = DU, so we can
+        #             # impose that the lower index happens first.
+        #             continue
+        #         for j in range(1, 4):
+                self.axis[n] = i
+                self.power[n] = j
+                mv = 3 * i + j - 1
+
+                # update coordinates
+                self.twist[n + 1] = self.tables.twist_move[self.twist[n]][
+                    mv
+                ]
+                self.flip[n + 1] = self.tables.flip_move[self.flip[n]][mv]
+                self.udslice[n + 1] = self.tables.udslice_move[
+                    self.udslice[n]
+                ][mv]
+                self.min_dist_1[n + 1] = self._phase_1_cost(n + 1)
+
+                # start search from next node
+                # m = self._phase_1_search(n + 1, depth - 1)
+                m = self._phase_1_search(n + 1, bound)
+                if m >= 0:
+                    return m
+                if m == -2:
+                    # time limit exceeded
+                    return -2
         # if no solution found at current depth, return -1
         return -1
-
+    
     def _phase_2_search(self, n, depth):
         if self.min_dist_2[n] == 0:
             return n
