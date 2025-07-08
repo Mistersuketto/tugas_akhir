@@ -205,11 +205,20 @@ class SolutionManager:
         self.edge4[n] = cc.edge4
         self.edge8[n] = cc.edge8
         self.corner[n] = cc.corner
-        self.min_dist_2[n] = self._phase_2_cost(n)
-        for depth in range(self._allowed_length - n):
-            m = self._phase_2_search(n, depth)
+        
+        # Dapatkan biaya yang sudah dihabiskan di Fase 1
+        phase1_cost = self.robot_cost[n]
+        
+        # Loop ini sekarang mengiterasi 'added_bound', yaitu tambahan anggaran biaya untuk Fase 2
+        # Kita mulai dari heuristik Fase 2 hingga sisa anggaran yang tersedia
+        start_bound = self._phase_2_cost(n)
+        for added_bound in range(start_bound, self._allowed_length - phase1_cost + 1):
+            total_bound = phase1_cost + added_bound
+            # Panggil pencarian Fase 2 dengan total_bound
+            m = self._phase_2_search(n, total_bound)
             if m >= 0:
                 return m
+
         return -1
 
     def _phase_1_cost(self, n):
@@ -232,7 +241,7 @@ class SolutionManager:
             self.tables.edge4_edge8_prune[self.edge4[n], self.edge8[n]],
         )
 
-    def _phase_1_search(self, n, depth):
+    def _phase_1_search(self, n, bound):
         if time.time() > self._timeout:
             return -2
         
@@ -270,40 +279,27 @@ class SolutionManager:
                 next_orientation = current_orientation
 
                 # Cek apakah gerakan ada di Set H1 untuk orientasi saat ini
-                if move_char in H1_MAP.get(current_orientation, []):
+                if move_char in set_H1.get(current_orientation, []):
                     cost_of_this_move = 1
                 else: # Jika tidak, berarti gerakan ini memerlukan re-orientasi dari Set I1
                     cost_of_this_move = 2
                     # Dapatkan orientasi baru dari kamus aturan I1_MAP
-                    next_orientation = I1_MAP.get((current_orientation, move_char), current_orientation)
+                    next_orientation = set_I1.get((current_orientation, move_char), current_orientation)
 
                 # Hitung total biaya robotik baru dan simpan ke 'memori'
                 new_robotic_cost = current_robotic_cost + cost_of_this_move
                 self.robotic_cost[n + 1] = new_robotic_cost
                 self.orientation[n + 1] = next_orientation
-                
-        # elif self.min_dist_1[n] == 0:
-        #     return self._phase_2_initialise(n)
-        # elif self.min_dist_1[n] <= depth:
-        #     for i in range(6):
-        #         if n > 0 and self.axis[n - 1] in (i, i + 3):
-        #             # don't turn the same face on consecutive moves
-        #             # also for opposite faces, e.g. U and D, UD = DU, so we can
-        #             # impose that the lower index happens first.
-        #             continue
-        #         for j in range(1, 4):
                 self.axis[n] = i
                 self.power[n] = j
+
                 mv = 3 * i + j - 1
 
                 # update coordinates
-                self.twist[n + 1] = self.tables.twist_move[self.twist[n]][
-                    mv
-                ]
+                self.twist[n + 1] = self.tables.twist_move[self.twist[n]][mv]
                 self.flip[n + 1] = self.tables.flip_move[self.flip[n]][mv]
-                self.udslice[n + 1] = self.tables.udslice_move[
-                    self.udslice[n]
-                ][mv]
+                self.udslice[n + 1] = self.tables.udslice_move[self.udslice[n]][mv]
+
                 self.min_dist_1[n + 1] = self._phase_1_cost(n + 1)
 
                 # start search from next node
@@ -317,38 +313,71 @@ class SolutionManager:
         # if no solution found at current depth, return -1
         return -1
     
-    def _phase_2_search(self, n, depth):
-        if self.min_dist_2[n] == 0:
-            return n
-        elif self.min_dist_2[n] <= depth:
-            for i in range(6):
-                if n > 0 and self.axis[n - 1] in (i, i + 3):
+    def _phase_2_search(self, n, bound):
+        # Pengecekan timeout
+        if time.time() > self._timeout:
+            return -1
+        
+        # Ambil biaya dan orientasi saat ini
+        current_robotic_cost = self.robot_cost[n]
+        current_orientation = self.orientation[n]
+
+        # Hitung f(n) = g(n) + h(n)
+        h_cost = self._phase_2_cost(n)
+        f_cost = current_robotic_cost + h_cost
+
+        # Pruning berdasarkan bound
+        if f_cost > bound:
+            return -1
+
+        # Jika h_cost == 0, tujuan akhir (kubus selesai) tercapai!
+        if h_cost == 0:
+            return n # Kembalikan panjang solusi 'n'
+
+        # Loop melalui gerakan yang diizinkan di Fase 2
+        for i in range(6):
+            if n > 0 and self.axis[n - 1] in (i, i + 3):
+                continue
+
+            for j in range(1, 4):
+                # Di Fase 2, beberapa gerakan dibatasi (hanya putaran 180 derajat)
+                if i in [1, 2, 4, 5] and j != 2: # R, F, L, B
                     continue
-                for j in range(1, 4):
-                    if i in [1, 2, 4, 5] and j != 2:
-                        # in phase two we only allow half turns of the faces
-                        # R, F, L, B
-                        continue
-                    self.axis[n] = i
-                    self.power[n] = j
-                    mv = 3 * i + j - 1
 
-                    # update coordinates following the move mv
-                    self.edge4[n + 1] = self.tables.edge4_move[self.edge4[n]][
-                        mv
-                    ]
-                    self.edge8[n + 1] = self.tables.edge8_move[self.edge8[n]][
-                        mv
-                    ]
-                    self.corner[n + 1] = self.tables.corner_move[
-                        self.corner[n]
-                    ][mv]
-                    self.min_dist_2[n + 1] = self._phase_2_cost(n + 1)
+                # === BLOK LOGIKA ROBOTIK (SAMA SEPERTI FASE 1) ===
+                move_char = Color(i).name
+                
+                cost_of_this_move = 0
+                next_orientation = current_orientation
 
-                    # start search from new node
-                    m = self._phase_2_search(n + 1, depth - 1)
-                    if m >= 0:
-                        return m
+                if move_char in set_H1.get(current_orientation, []):
+                    cost_of_this_move = 1
+                else:
+                    cost_of_this_move = 2
+                    next_orientation = set_I1.get((current_orientation, move_char), current_orientation)
+
+                new_robotic_cost = current_robotic_cost + cost_of_this_move
+                self.robot_cost[n + 1] = new_robotic_cost
+                self.orientation[n + 1] = next_orientation
+                # === AKHIR BLOK LOGIKA ROBOTIK ===
+
+                # Simpan detail gerakan
+                self.axis[n] = i
+                self.power[n] = j
+
+                # Update koordinat Fase 2
+                mv = 3 * i + j - 1
+                self.edge4[n + 1] = self.tables.edge4_move[self.edge4[n]][mv]
+                self.edge8[n + 1] = self.tables.edge8_move[self.edge8[n]][mv]
+                self.corner[n + 1] = self.tables.corner_move[self.corner[n]][mv]
+
+                # Hitung heuristik baru
+                self.min_dist_2[n + 1] = self._phase_2_cost(n + 1)
+
+                # Panggil rekursif dengan 'bound' yang sama
+                m = self._phase_2_search(n + 1, bound)
+                if m >= 0:
+                    return m
         # if no moves lead to a tree with a solution or min_dist_2 > depth then
         # we return -1 to signify lack of solution
         return -1
