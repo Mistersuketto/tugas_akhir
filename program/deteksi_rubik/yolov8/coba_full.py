@@ -6,12 +6,8 @@ from ultralytics import YOLO
 # PENGATURAN AWAL
 # ===================================================================
 
-# Muat model YOLOv8 yang sudah Anda latih
 model = YOLO("best.pt")
 
-# Definisikan rentang warna HSV.
-# PENTING: Nilai ini mungkin perlu Anda sesuaikan (kalibrasi)
-# agar cocok dengan kamera dan kondisi pencahayaan Anda.
 color_ranges = {
     'Putih':  [([0, 0, 150], [180, 55, 255])],
     'Kuning': [([22, 90, 100], [35, 255, 255])],
@@ -21,20 +17,13 @@ color_ranges = {
     'Oranye': [([11, 120, 70], [21, 255, 255])]
 }
 
-# Kamus untuk memetakan warna tengah ke notasi sisi Rubik.
-# Inilah "kunci jawaban" untuk verifikasi.
-# Sesuaikan jika skema warna Rubik Anda berbeda.
 center_color_map = {
-    'Putih':  'U', # Up
-    'Kuning': 'D', # Down
-    'Hijau':  'F', # Front
-    'Biru':   'B', # Back
-    'Merah':  'R', # Right
-    'Oranye': 'L'  # Left
+    'Putih':  'U', 'Kuning': 'D', 'Hijau':  'F',
+    'Biru':   'B', 'Merah':  'R', 'Oranye': 'L'
 }
 
 # ===================================================================
-# FUNGSI BANTU
+# FUNGSI-FUNGSI BANTU
 # ===================================================================
 
 def get_color_name(hsv_color):
@@ -47,73 +36,102 @@ def get_color_name(hsv_color):
                 return color_name
     return "Unknown"
 
+def analyze_face_grid(face_roi):
+    """
+    FUNGSI BARU: Menganalisis ROI wajah rubik, membaginya menjadi grid 3x3,
+    dan mengembalikan 9 warnanya beserta gambar visualisasinya.
+    """
+    face_colors = []
+    height, width, _ = face_roi.shape
+    cell_h, cell_w = height // 3, width // 3
+    
+    analyzed_roi = face_roi.copy()
+    
+    for i in range(3): # Loop baris
+        for j in range(3): # Loop kolom
+            x_start, y_start = j * cell_w, i * cell_h
+            cell = face_roi[y_start:y_start + cell_h, x_start:x_start + cell_w]
+
+            margin = int(cell_w * 0.2)
+            center_cell = cell[margin:-margin, margin:-margin]
+            
+            if center_cell.size == 0:
+                face_colors.append("Unknown")
+                continue
+
+            hsv_cell = cv2.cvtColor(center_cell, cv2.COLOR_BGR2HSV)
+            avg_hsv = cv2.mean(hsv_cell)[:3]
+            color_name = get_color_name(avg_hsv)
+            face_colors.append(color_name)
+            
+            # Gambar visualisasi pada jendela analisis
+            cv2.rectangle(analyzed_roi, (x_start, y_start), (x_start + cell_w, y_start + cell_h), (0,0,0), 1)
+            cv2.putText(analyzed_roi, color_name[0], (x_start + int(cell_w*0.4), y_start + int(cell_h*0.6)), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+            
+    return face_colors, analyzed_roi
+
 # ===================================================================
 # LOOP UTAMA
 # ===================================================================
 
-# Buka webcam
 cap = cv2.VideoCapture(0)
+rubik_state = {}  # Variabel untuk menyimpan state semua sisi
 
 while True:
-    # Baca frame dari webcam
     ret, frame = cap.read()
     if not ret:
         break
 
-    # Lakukan prediksi YOLO pada frame
     results = model.predict(source=frame, conf=0.7, verbose=False)
 
-    # Hanya proses jika ada objek yang terdeteksi
     if results and len(results[0].boxes) > 0:
-        # Ambil deteksi dengan kepercayaan tertinggi
         best_detection_idx = results[0].boxes.conf.argmax()
         box = results[0].boxes[best_detection_idx]
 
-        # 1. DAPATKAN PREDIKSI AWAL DARI YOLO
         x1, y1, x2, y2 = map(int, box.xyxy[0])
-        yolo_prediction = model.names[int(box.cls[0])]
-
-        # 2. ISOLASI STIKER TENGAH
         face_roi = frame[y1:y2, x1:x2]
-        h, w, _ = face_roi.shape
-        
-        # Ambil area 1/3 di tengah ROI (lokasi stiker tengah)
-        cx_start, cx_end = w // 3, w * 2 // 3
-        cy_start, cy_end = h // 3, h * 2 // 3
-        center_sticker_roi = face_roi[cy_start:cy_end, cx_start:cx_end]
-        
-        verified_face_notation = "N/A"
-        verified_color_name = "N/A"
 
-        if center_sticker_roi.size > 0:
-            # 3. ANALISIS WARNA STIKER TENGAH
-            hsv_center = cv2.cvtColor(center_sticker_roi, cv2.COLOR_BGR2HSV)
-            avg_hsv = cv2.mean(hsv_center)[:3]
-            verified_color_name = get_color_name(avg_hsv)
+        if face_roi.size > 0:
+            # 1. ANALISIS GRID 3X3 PADA SISI YANG TERDETEKSI
+            face_colors, analyzed_face = analyze_face_grid(face_roi)
             
-            # 4. VERIFIKASI DENGAN 'center_color_map'
-            if verified_color_name in center_color_map:
-                verified_face_notation = center_color_map[verified_color_name]
+            # Tampilkan jendela analisis secara real-time
+            cv2.imshow("Analisis Grid 3x3", analyzed_face)
 
-        # 5. TAMPILKAN HASIL
-        # Gambar kotak deteksi utama
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        
-        # Gambar kotak deteksi stiker tengah untuk visualisasi
-        cv2.rectangle(frame, (x1 + cx_start, y1 + cy_start), (x1 + cx_end, y1 + cy_end), (255, 0, 0), 2)
+            # 2. VERIFIKASI SISI BERDASARKAN WARNA TENGAH DARI HASIL ANALISIS
+            # Stiker tengah adalah elemen ke-5 (indeks 4)
+            center_color = face_colors[4]
+            verified_face_notation = center_color_map.get(center_color, "Unknown")
+            
+            # 3. TAMPILKAN HASIL VERIFIKASI DI JENDELA UTAMA
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            label_text = f"Sisi Terdeteksi: {verified_face_notation} ({center_color})"
+            cv2.putText(frame, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-        # Siapkan teks label
-        label_text = f"YOLO: {yolo_prediction} | Verified: {verified_face_notation} ({verified_color_name})"
-        cv2.putText(frame, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    # Tampilkan frame utama
+    cv2.imshow("Deteksi Rubik", frame)
 
-
-    # Tampilkan frame hasil
-    cv2.imshow("Deteksi dan Verifikasi Sisi Rubik", frame)
+    # 4. SIMPAN STATE SAAT TOMBOL 's' DITEKAN
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord('s'):
+        # Pastikan ada sisi yang terverifikasi sebelum menyimpan
+        if 'face_colors' in locals() and verified_face_notation != "Unknown":
+            # Konversi daftar warna menjadi string notasi Kociemba
+            kociemba_string = "".join([center_color_map.get(c, '?')[0] for c in face_colors])
+            rubik_state[verified_face_notation] = kociemba_string
+            
+            print(f"\n--- SISI '{verified_face_notation}' ({center_color}) BERHASIL DISIMPAN ---")
+            print(f"Hasil Pindai: {face_colors}")
+            print(f"String Kociemba: {kociemba_string}")
+            print("---------------------------------")
+            print("State Rubik Saat Ini:")
+            for face, state_str in sorted(rubik_state.items()):
+                print(f"  {face}: {state_str}")
 
     # Keluar dari loop jika tombol 'ESC' ditekan
-    if cv2.waitKey(1) & 0xFF == 27:
+    if key == 27:
         break
 
-# Bebaskan sumber daya
 cap.release()
 cv2.destroyAllWindows()
