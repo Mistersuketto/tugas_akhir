@@ -152,6 +152,11 @@ class SolutionManager:
         self.axis = [0] * max_length
         self.power = [0] * max_length
 
+        # ===== TRACK KONDIRI RUBIK DAN BIAYA =====
+        self.robot_cost = [0] * max_length
+        self.orientation = [""] * max_length
+        # ===== TRACK KONDIRI RUBIK DAN BIAYA =====
+
         # the lists twist, flip and udslice store the phase 1 coordinates after
         # n moves. position 0 stores the inital states, the coordinates after n
         # moves are stored in position n
@@ -181,6 +186,12 @@ class SolutionManager:
         self.corner[0] = self.c.corner
         self.edge4[0] = self.c.edge4
         self.edge8[0] = self.c.edge8
+
+        # ===== INISIALISASI KONDISI RUBIK DAN BIAYA =====
+        self.robot_cost[0] = 0
+        self.orientation[0] = "UF"
+        # ===== INISIALISASI KONDISI RUBIK DAN BIAYA =====
+        
         self.min_dist_1[0] = self._phase_1_cost(0)
 
     def _phase_2_initialise(self, n):
