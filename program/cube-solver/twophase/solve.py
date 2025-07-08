@@ -117,6 +117,8 @@ class SolutionManager:
         self._allowed_length = max_length
         self._timeout = timeout
 
+        print(f"[DEBUG] Heuristik awal (h_cost) Fase 1: {self.min_dist_1[0]}")
+
         for bound in range(self._allowed_length):
             n = self._phase_1_search(0, bound)
             if n >= 0:
@@ -206,13 +208,22 @@ class SolutionManager:
         self.edge8[n] = cc.edge8
         self.corner[n] = cc.corner
         
+        # Baris ini menghitung heuristik awal untuk Fase 2
+        initial_h_cost_phase2 = self._phase_2_cost(n)
+        print(f"[DEBUG] Memulai Fase 2. Heuristik awal (h_cost) Fase 2: {initial_h_cost_phase2}")
+
+        # JIKA KUBUS SUDAH SELESAI, LANGSUNG KEMBALIKAN SOLUSI
+        if initial_h_cost_phase2 == 0:
+            # Kita berada di langkah ke-n dan h_cost sudah 0, berarti ini solusinya.
+            return n
+        
         # Dapatkan biaya yang sudah dihabiskan di Fase 1
         phase1_cost = self.robotic_cost[n]
         
         # Loop ini sekarang mengiterasi 'added_bound', yaitu tambahan anggaran biaya untuk Fase 2
         # Kita mulai dari heuristik Fase 2 hingga sisa anggaran yang tersedia
-        start_bound = self._phase_2_cost(n)
-        for added_bound in range(start_bound, self._allowed_length - phase1_cost + 1):
+        # start_bound = self._phase_2_cost(n)
+        for added_bound in range(initial_h_cost_phase2, self._allowed_length - phase1_cost + 1):
             total_bound = phase1_cost + added_bound
             # Panggil pencarian Fase 2 dengan total_bound
             m = self._phase_2_search(n, total_bound)
