@@ -117,8 +117,8 @@ class SolutionManager:
         self._allowed_length = max_length
         self._timeout = timeout
 
-        for depth in range(self._allowed_length):
-            n = self._phase_1_search(0, depth)
+        for bound in range(self._allowed_length):
+            n = self._phase_1_search(0, bound)
             if n >= 0:
                 # solution found
                 return self._solution_to_string(n)
@@ -152,13 +152,13 @@ class SolutionManager:
         self.axis = [0] * max_length
         self.power = [0] * max_length
 
-        # ===== TRACK KONDIRI RUBIK DAN BIAYA =====
-        self.robot_cost = [0] * max_length
+        # ===== TRACK KONDISI RUBIK DAN BIAYA =====
+        self.robotic_cost = [0] * max_length
         self.orientation = [""] * max_length
-        # ===== TRACK KONDIRI RUBIK DAN BIAYA =====
+        # ===== TRACK KONDISI RUBIK DAN BIAYA =====
 
         # the lists twist, flip and udslice store the phase 1 coordinates after
-        # n moves. position 0 stores the inital states, the coordinates after n
+        # n moves. position 0 stores the initial states, the coordinates after n
         # moves are stored in position n
         self.twist = [0] * max_length
         self.flip = [0] * max_length
@@ -188,7 +188,7 @@ class SolutionManager:
         self.edge8[0] = self.c.edge8
 
         # ===== INISIALISASI KONDISI RUBIK DAN BIAYA =====
-        self.robot_cost[0] = 0
+        self.robotic_cost[0] = 0
         self.orientation[0] = "UF"
         # ===== INISIALISASI KONDISI RUBIK DAN BIAYA =====
         
@@ -207,7 +207,7 @@ class SolutionManager:
         self.corner[n] = cc.corner
         
         # Dapatkan biaya yang sudah dihabiskan di Fase 1
-        phase1_cost = self.robot_cost[n]
+        phase1_cost = self.robotic_cost[n]
         
         # Loop ini sekarang mengiterasi 'added_bound', yaitu tambahan anggaran biaya untuk Fase 2
         # Kita mulai dari heuristik Fase 2 hingga sisa anggaran yang tersedia
@@ -319,7 +319,7 @@ class SolutionManager:
             return -1
         
         # Ambil biaya dan orientasi saat ini
-        current_robotic_cost = self.robot_cost[n]
+        current_robotic_cost = self.robotic_cost[n]
         current_orientation = self.orientation[n]
 
         # Hitung f(n) = g(n) + h(n)
@@ -357,7 +357,7 @@ class SolutionManager:
                     next_orientation = set_I1.get((current_orientation, move_char), current_orientation)
 
                 new_robotic_cost = current_robotic_cost + cost_of_this_move
-                self.robot_cost[n + 1] = new_robotic_cost
+                self.robotic_cost[n + 1] = new_robotic_cost
                 self.orientation[n + 1] = next_orientation
                 # === AKHIR BLOK LOGIKA ROBOTIK ===
 
