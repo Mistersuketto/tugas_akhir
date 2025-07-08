@@ -7,57 +7,44 @@ kuning D
 oranye L
 biru B
 
+00 > U      04 > F2         08 > b + 90     12 > c + 90
+01 > U2     05 > F'         09 > b + 180    13 > c + 180
+02 > U'     06 > a + 90     10 > b - 90     14 > c - 90
+03 > F      07 > a -90      11 > b -180     15 > c - 180
+
+# kondisi solved
 UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB
 
+# kondisi scrambled 1
 R U R2 L' U' D B' R2 L' D' F U R2 U R2 L2 U D2 R2 D
-
-
 BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF
+# langkah penyelesaian
+B U' L' D' R' D' L2 D' L F' L' D F2 R2 U R2 B2 U2 L2 F2 D' # kociemba
+R L' D' F' U' B2 D2 L B U R2 D' B2 D' B2 R2 D' F2 D' L2 U F2 L2 # twophase
+# yaskawa
+B       U'  L'      D'      R'      D'  L2      D'  L   F'      L'      D   F2      R2      U       R2  B2      U2      L2
+13 03,  02, 12 05,  06 05,  06 05,  02, 13 04,  02, 03, 14 05,  12 05,  00, 14 04,  14 04,  06 03,  01, 14 04,  12 04,  06 04,
+F2      D'
+12 04,  06 05
 
-B U' L' D' R' D' L2 D' L F' L' D F2 R2 U R2 B2 U2 L2 F2 D'
+# kondisi scrambled 2
+R F B' D B U D' L U' D' R F2 U2 L2 B2 U' D' L2 F2 D
+UUUBUUBRFDBBRRULDRLBLLFFDDFFFUFDRBDUBLDLLFRURLLRRBDFBD
+# langkah penyelesaian
+U B' L U2 D R' F U' B R' U2 F2 U D2 B2 U B2 U F2 R2 # kociemba
+U2 F' L B' R' U2 D' B' L F2 B2 D' R2 F2 U' L2 F2 D' R2 U' R2 L2 D' # twophase
+# yaskawa
+U   B'      L       U2  D       R'      F       U'      B       R'      U2  F2      U   D2      B2      U       B2  U   F2
+00, 13 05,  12 03,  01, 06 03,  06 05,  12 03,  06 05,  06 03,  14 05,  01, 14 04,  00, 06 04,  06 04,  06 05,  01, 03, 06 04,
+R2
+14 04
 
-R L' D' F' U' B2 D2 L B U R2 D' B2 D' B2 R2 D' F2 D' L2 U F2 L2
-
-F U F U F U F2 U
-
-U' F2 U' F' U' F' U' F'
-
-program yaskawa
-00 > U
-01 > U2
-02 > U'
-03 > F
-04 > F2
-05 > F'
-06 > a+90
-07 > a-90
-08 > b+90
-09 > b+180
-10 > b-90
-11 > b-180
-12 > c+90
-13 > c+180
-14 > c-90
-15 > c-180
-16 >
-B 07, 00,
-U' 05,
-L' 08, 02,
-D' 07, 02,
-R' 07, 02,
-D' 05
-L2 06, 04,
-D' 02
-L 03
-F' 08, 02,
-L' 05
-D 12, 03,
-F2 01
-R2 12, 04
-U 10, 00
-R2 04
-B2 12, 04
-U2 01
-L2 12, 04
-F2 10, 01
-D' 12, 05
+# kondisi scrambled 3
+L' B' R2 U2 F2 L U2 F U' B2 L D2 L B2 D2 F2 D2 L2 D2
+ULUDURLRRBDRRRRBUDFBDBFFULLFFUUDBFBLRFDULLDLLBDFUBFBDR
+# langkah penyelesaian
+B' U' D L' D L B2 L U' B' L F2 D B2 U' F2 R2 D' R2 B2 D2 # kociemba
+R' B D2 F2 B2 R2 U' F L' F2 U' L2 U2 B2 D' R2 D R2 D' L2 D L2 # twophase
+# yaskawa
+B'      U'  D       L'      D   L   B2      L   U'      B'  L       F2      D       B2      U'      F2      R2      D'      R2  B2      D2
+13 05,  02, 06 03,  10 02,  03, 00, 14 04,  00, 08 02,  05, 12 03,  12 04,  06 03,  06 04,  06 05,  06 04,  10 01,  12 05,  01, 10 01,  04
