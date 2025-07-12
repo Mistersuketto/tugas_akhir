@@ -10,7 +10,7 @@ if project_path not in sys.path:
 from solver import solve
 
 # 2. Definisikan string kubus yang akan dipecahkan
-scrambled_cube_string = "DUUBULDBFRBFRRULLLBRDFFFBLURDBFDFDRFRULBLUFDURRBLBDUDL"
+scrambled_cube_string = "BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF"
 
 # 3. Panggil fungsi solve untuk mendapatkan solusi mentah
 print("Tahap 1: Mencari solusi langkah cepat...")
