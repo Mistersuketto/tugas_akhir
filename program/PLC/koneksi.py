@@ -1,8 +1,8 @@
 from pymodbus.client import ModbusTcpClient
 import time
 
-ip_plc = '192.168.10.16'
-port_plc = 502
+ip_plc = '192.168.1.28'
+port_plc = 9600
 
 write_address = 100
 read_address = 200
