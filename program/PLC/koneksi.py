@@ -19,4 +19,4 @@ try:
         exit()
 
 finally:
-    plc.close()    
+    plc.close()
