@@ -1,13 +1,24 @@
 import sys
 import os
 
-# Menambahkan path ke pustaka solver agar bisa di-import
-project_path = os.path.abspath('RubiksCube-TwophaseSolver')
+# ==============================================================================
+# ## BAGIAN 1: KONFIGURASI DAN PENGETAHUAN ROBOT ##
+# ==============================================================================
+
+# --- Pengaturan Path untuk Pustaka Solver ---
+# Pastikan nama folder ini sesuai dengan yang ada di lokal Anda
+SOLVER_FOLDER_NAME = 'RubiksCube-TwophaseSolver'
+project_path = os.path.abspath(SOLVER_FOLDER_NAME)
 if project_path not in sys.path:
     sys.path.append(project_path)
 
-# 1. Impor fungsi 'solve' dari pustaka
-from solver import solve
+try:
+    # Impor fungsi 'solve' dari pustaka Kociemba standar
+    from solver import solve
+except ImportError:
+    print(f"Error: Tidak dapat menemukan pustaka di folder '{SOLVER_FOLDER_NAME}'.")
+    print("Pastikan nama folder sudah benar dan berada di direktori yang sama dengan skrip ini.")
+    sys.exit(1)
 
 # ===== NOTASI TAMBAHAN =====
 set_H1 = {
@@ -215,57 +226,83 @@ re_orient = {
 }
 # ===== NOTASI TAMBAHAN =====
 
+# ==============================================================================
+# ## BAGIAN 2: ALGORITMA PENERJEMAH TAHAP KEDUA ##
+# ==============================================================================
+
 def create_robot_script(solution_string, initial_orientation="UF"):
-    """Menerjemahkan solusi Kociemba menjadi skrip perintah robot."""
+    """
+    Menerjemahkan solusi Kociemba standar menjadi skrip perintah robot
+    yang terdiri dari 16 gerakan dasar.
+    """
     current_orientation = initial_orientation
-    total_robotic_cost = 0
     robot_commands = []
 
-    # Bersihkan string solusi menjadi daftar
+    # Bersihkan string solusi menjadi daftar, tangani jika kosong
     moves_list = solution_string.split('(')[0].strip().split(' ')
     if not moves_list or moves_list == ['']:
-        return [], 0
-    
-    print("\nTahap 2: Menerjemahkan solusi menjadi skrip robot...")
+        return []
+
+    print("\n[Tahap 2] Menerjemahkan solusi menjadi skrip robot...")
     for move in moves_list:
-        base_move = move[0]
+        base_move = move[0] # Dapatkan gerakan dasar (misal, dari "R'", "R2", dasarnya adalah "R")
 
+        # Periksa apakah gerakan bisa dilakukan langsung
         if base_move in set_H1.get(current_orientation, []):
-            print(f"  - Gerakan '{move}': OK (Orientasi: {current_orientation}, Biaya: +1)")
+            print(f"  - Gerakan '{move}': OK (Orientasi: {current_orientation})")
             robot_commands.append(move)
-            total_robotic_cost += 1
         else:
+            # Jika tidak, cari orientasi baru yang diperlukan
             new_orientation = set_I1.get((current_orientation, base_move))
-
+            
             if new_orientation:
-                print(f"  - Gerakan '{move}': Perlu Re-orientasi ke {new_orientation} (Biaya: +2)")
-                robot_commands.append(f"REORIENT_TO_{new_orientation}")
-                robot_commands.append(move)
-                total_robotic_cost += 2
-                current_orientation = new_orientation
+                # Cari perintah re-orientasi yang spesifik dari kamus mapping
+                reorient_command = RE_ORIENT_MAP.get((current_orientation, new_orientation))
+                
+                if reorient_command:
+                    print(f"  - Gerakan '{move}': Perlu Re-orientasi dari {current_orientation} ke {new_orientation}")
+                    print(f"    -> Perintah Re-orientasi: {reorient_command}")
+                    
+                    robot_commands.append(reorient_command)
+                    robot_commands.append(move) # Tambahkan gerakan putar setelahnya
+                    current_orientation = new_orientation # Perbarui orientasi robot
+                else:
+                    # Menangani jika transisi ada di set_I1 tapi tidak ada di RE_ORIENT_MAP
+                    error_msg = f"ERROR_CMD_UNDEFINED_FOR_{current_orientation}_TO_{new_orientation}"
+                    print(f"Peringatan: Perintah untuk transisi dari {current_orientation} ke {new_orientation} tidak terdefinisi!")
+                    robot_commands.append(error_msg)
             else:
+                # Menangani jika transisi tidak ada di set_I1
+                error_msg = f"ERROR_UNKNOWN_TRANSITION_FOR_{move}_FROM_{current_orientation}"
                 print(f"Peringatan: Transisi dari {current_orientation} untuk {base_move} tidak ada!")
-                robot_commands.append(f"ERROR_UNKNOWN_TRANSITION_FOR_{move}")
+                robot_commands.append(error_msg)
     
-    return robot_commands, total_robotic_cost
+    return robot_commands
 
-# 2. Definisikan string kubus yang akan dipecahkan
-scrambled_cube_string = "BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF"
+# ==============================================================================
+# ## BAGIAN 3: ALUR UTAMA PROGRAM ##
+# ==============================================================================
 
-# 3. Panggil fungsi solve untuk mendapatkan solusi mentah
-print("Tahap 1: Mencari solusi langkah cepat...")
-# Kita tidak perlu timeout yang lama karena ini sangat cepat
-raw_solution = solve(scrambled_cube_string, max_length=22, timeout=5)
+if __name__ == "__main__":
+    # Definisikan string kubus
+    scrambled_cube_string = "DUUBULDBFRBFRRULLLBRDFFFBLURDBFDFDRFRULBLUFDURRBLBDUDL"
 
-# 4. Tampilkan dan simpan hasilnya
-final_script, final_cost = create_robot_script(raw_solution)
+    # --- TAHAP 1: DAPATKAN SOLUSI CEPAT ---
+    print("[Tahap 1] Mencari solusi langkah standar...")
+    # Menggunakan pustaka Kociemba standar yang cepat
+    raw_solution = solve(scrambled_cube_string, max_length=22, timeout=10)
+    print(f"Solusi mentah ditemukan: {raw_solution}")
 
-# --- TAMPILKAN HASIL AKHIR ---
-print("\n" + "="*40)
-print("      SKRIP AKHIR UNTUK ROBOT")
-print("="*40)
-print("Perintah:")
-for command in final_script:
-    print(f"  -> {command}")
-print(f"\nTotal Perkiraan Biaya Robotik: {final_cost}")
-print("="*40)
+    # --- TAHAP 2: JALANKAN PENERJEMAH ---
+    # Memanggil fungsi penerjemah dengan solusi mentah sebagai input
+    final_script = create_robot_script(raw_solution)
+
+    # --- TAMPILKAN HASIL AKHIR ---
+    print("\n" + "="*40)
+    print("      SKRIP AKHIR UNTUK ROBOT")
+    print("="*40)
+    print("Perintah:")
+    # Cetak setiap perintah dalam format yang rapi
+    for command in final_script:
+        print(f"  -> {command}")
+    print("="*40)
