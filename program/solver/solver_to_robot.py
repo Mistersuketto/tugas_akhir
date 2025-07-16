@@ -22,116 +22,74 @@ except ImportError:
 
 # ===== NOTASI TAMBAHAN =====
 set_H1 = {
-    "UF": ["U", "F"],   "UR": ["U", "R"],   "UB": ["U", "B"],   "UL": ["U", "L"],   "DF": ["D", "F"],   "DR": ["D", "R"],
-    "DB": ["D", "B"],   "DL": ["D", "L"],   "FU": ["F", "U"],   "FR": ["F", "R"],   "FD": ["F", "D"],   "FL": ["F", "L"],
-    "BU": ["B", "U"],   "BR": ["B", "R"],   "BD": ["B", "D"],   "BL": ["B", "L"],   "RU": ["R", "U"],   "RF": ["R", "F"],
-    "RD": ["R", "D"],   "RB": ["R", "B"],   "LU": ["L", "U"],   "LF": ["L", "F"],   "LD": ["L", "D"],   "LB": ["L", "B"],
+    "UF": ["U", "F"],   "UR": ["U", "R"],   "UB": ["U", "B"],   "UL": ["U", "L"],
+    "DF": ["D", "F"],   "DR": ["D", "R"],   "DB": ["D", "B"],   "DL": ["D", "L"],
+    "FU": ["F", "U"],   "FR": ["F", "R"],   "FD": ["F", "D"],   "FL": ["F", "L"],
+    "BU": ["B", "U"],   "BR": ["B", "R"],   "BD": ["B", "D"],   "BL": ["B", "L"],
+    "RU": ["R", "U"],   "RF": ["R", "F"],   "RD": ["R", "D"],   "RB": ["R", "B"],
+    "LU": ["L", "U"],   "LF": ["L", "F"],   "LD": ["L", "D"],   "LB": ["L", "B"],
 }
 
 set_I1 = {
     # kondisi "UF"
-    ("UF", "R"): "UR",  ("UF", "L"): "UL",  ("UF", "B"): "UB",  ("UF", "D"): "FD",
+    ("UF", "R"): ["UR", "RF"],  ("UF", "L"): ["UL", "LF"],  ("UF", "B"): ["UB", "BU"],  ("UF", "D"): ["FD", "DF"],
     # kondisi "UR"
-    ("UR", "B"): "UB",  ("UR", "F"): "UF",  ("UR", "L"): "UL",  ("UR", "D"): "RD",
+    ("UR", "B"): ["UB", "BR"],  ("UR", "F"): ["UF", "FR"],  ("UR", "L"): ["UL", "LU"],  ("UR", "D"): ["RD", "DR"],
     # kondisi "UB"
-    ("UB", "L"): "UL",  ("UB", "R"): "UR",  ("UB", "F"): "UF",  ("UB", "D"): "BD",
+    ("UB", "L"): ["UL", "LB"],  ("UB", "R"): ["UR", "RB"],  ("UB", "F"): ["UF", "FU"],  ("UB", "D"): ["BD", "DB"],
     # kondisi "UL"
-    ("UL", "F"): "UF",  ("UL", "B"): "UB",  ("UL", "R"): "UR",  ("UL", "D"): "LD",
+    ("UL", "F"): ["UF", "FL"],  ("UL", "B"): ["UB", "BL"],  ("UL", "R"): ["UR", "RU"],  ("UL", "D"): ["LD", "DL"],
+    # ==========U==========
+
     # kondisi "DF"
-    ("DF", "L"): "DL",  ("DF", "R"): "DR",  ("DF", "B"): "DB",  ("DF", "U"): "FU",
+    ("DF", "L"): ["DL", "LF"],  ("DF", "R"): ["DR", "RF"],  ("DF", "B"): ["DB", "BD"],  ("DF", "U"): ["FU", "UF"],
     # kondisi "DR"
-    ("DR", "F"): "DF",  ("DR", "B"): "DB",  ("DR", "L"): "DL",  ("DR", "U"): "RU",
-    
+    ("DR", "F"): ["DF", "FR"],  ("DR", "B"): ["DB", "BR"],  ("DR", "L"): ["DL", "LD"],  ("DR", "U"): ["RU", "UR"],
     # kondisi "DB"
-    ("DB", "R"): "DR",  ("DB", "L"): "DL",  ("DB", "F"): "DF",  ("DB", "U"): "BU",
+    ("DB", "R"): ["DR", "RB"],  ("DB", "L"): ["DL", "LB"],  ("DB", "F"): ["DF", "FD"],  ("DB", "U"): ["BU", "UB"],
     # kondisi "DL"
-    ("DL", "B"): "DB",  ("DL", "F"): "DF",  ("DL", "R"): "DR",  ("DL", "U"): "LU",
+    ("DL", "B"): ["DB", "BL"],  ("DL", "F"): ["DF", "FL"],  ("DL", "R"): ["DR", "RD"],  ("DL", "U"): ["LU", "UL"],
+    # ==========D==========
+
     # kondisi "FU"
-    ("FU", "L"): "FL",  ("FU", "R"): "FR",  ("FU", "D"): "FD",  ("FU", "B"): "UB",
+    ("FU", "L"): ["FL", "LU"],  ("FU", "R"): ["FR", "RU"],  ("FU", "D"): ["FD", "DF"],  ("FU", "B"): ["UB", "BU"],
     # kondisi "FR"
-    ("FR", "U"): "FU",  ("FR", "D"): "FD",  ("FR", "L"): "FL",  ("FR", "B"): "RB",
+    ("FR", "U"): ["FU", "UR"],  ("FR", "D"): ["FD", "DR"],  ("FR", "L"): ["FL", "LF"],  ("FR", "B"): ["RB", "BR"],
     # kondisi "FD"
-    ("FD", "R"): "FR",  ("FD", "L"): "FL",  ("FD", "U"): "FU",  ("FD", "B"): "DB",
+    ("FD", "R"): ["FR", "RD"],  ("FD", "L"): ["FL", "LD"],  ("FD", "U"): ["FU", "UF"],  ("FD", "B"): ["DB", "BD"],
     # kondisi "FL"
-    ("FL", "D"): "FD",  ("FL", "U"): "FU",  ("FL", "R"): "FR",  ("FL", "B"): "LB",
-    
-    # kondisi "BU"
-    ("BU", "R"): "BR",  ("BU", "L"): "BL",  ("BU", "D"): "BD",  ("BU", "F"): "UF",
-    # kondisi "BR"
-    ("BR", "D"): "BD",  ("BR", "U"): "BU",  ("BR", "L"): "BL",  ("BR", "F"): "RF",
-    # kondisi "BD"
-    ("BD", "L"): "BL",  ("BD", "R"): "BR",  ("BD", "U"): "BU",  ("BD", "F"): "DF",
-    # kondisi "BL"
-    ("BL", "U"): "BU",  ("BL", "D"): "BD",  ("BL", "R"): "BR",  ("BL", "F"): "LF",
-    # kondisi "RU"
-    ("RU", "F"): "RF",  ("RU", "B"): "RB",  ("RU", "D"): "RD",  ("RU", "L"): "UL",
-    # kondisi "RF"
-    ("RF", "D"): "RD",  ("RF", "U"): "RU",  ("RF", "B"): "RB",  ("RF", "L"): "FL",
-    
-    # kondisi "RD"
-    ("RD", "B"): "RB",  ("RD", "F"): "RF",  ("RD", "U"): "RU",  ("RD", "L"): "DL",
-    # kondisi "RB"
-    ("RB", "U"): "RU",  ("RB", "D"): "RD",  ("RB", "F"): "RF",  ("RB", "L"): "BL",
-    # kondisi "LU"
-    ("LU", "B"): "LB",  ("LU", "F"): "LF",  ("LU", "D"): "LD",  ("LU", "R"): "UR",
-    # kondisi "LF"
-    ("LF", "U"): "LU",  ("LF", "D"): "LD",  ("LF", "B"): "LB",  ("LF", "R"): "FR",
-    # kondisi "LD"
-    ("LD", "F"): "LF",  ("LD", "B"): "LB",  ("LD", "U"): "LU",  ("LD", "R"): "DR",
-    # kondisi "LB"
-    ("LB", "D"): "LD",  ("LB", "U"): "LU",  ("LB", "F"): "LF",  ("LB", "R"): "BR",
-    # ==========
-    # kondisi "UF"
-    ("UF", "R"): "RF",  ("UF", "L"): "LF",  ("UF", "B"): "BU",  ("UF", "D"): "DF",
-    # kondisi "UR"
-    ("UR", "B"): "BR",  ("UR", "F"): "FR",  ("UR", "L"): "LU",  ("UR", "D"): "DR",
-    # kondisi "UB"
-    ("UB", "L"): "LB",  ("UB", "R"): "RB",  ("UB", "F"): "FU",  ("UB", "D"): "DB",
-    # kondisi "UL"
-    ("UL", "F"): "FL",  ("UL", "B"): "BL",  ("UL", "R"): "RU",  ("UL", "D"): "DL",
-    # kondisi "DF"
-    ("DF", "L"): "LF",  ("DF", "R"): "RF",  ("DF", "B"): "BD",  ("DF", "U"): "UF",
-    # kondisi "DR"
-    ("DR", "F"): "FR",  ("DR", "B"): "BR",  ("DR", "L"): "LD",  ("DR", "U"): "UR",
-    
-    # kondisi "DB"
-    ("DB", "R"): "RB",  ("DB", "L"): "LB",  ("DB", "F"): "FD",  ("DB", "U"): "UB",
-    # kondisi "DL"
-    ("DL", "B"): "BL",  ("DL", "F"): "FL",  ("DL", "R"): "RD",  ("DL", "U"): "UL",
-    # kondisi "FU"
-    ("FU", "L"): "LU",  ("FU", "R"): "RU",  ("FU", "D"): "DF",  ("FU", "B"): "BU",
-    # kondisi "FR"
-    ("FR", "U"): "UR",  ("FR", "D"): "DR",  ("FR", "L"): "LF",  ("FR", "B"): "BR",
-    # kondisi "FD"
-    ("FD", "R"): "RD",  ("FD", "L"): "LD",  ("FD", "U"): "UF",  ("FD", "B"): "BD",
-    # kondisi "FL"
-    ("FL", "D"): "DL",  ("FL", "U"): "UL",  ("FL", "R"): "RF",  ("FL", "B"): "BL",
+    ("FL", "D"): ["FD", "DL"],  ("FL", "U"): ["FU", "UL"],  ("FL", "R"): ["FR", "RF"],  ("FL", "B"): ["LB", "BL"],
+    # ==========F==========
 
     # kondisi "BU"
-    ("BU", "R"): "RU",  ("BU", "L"): "LU",  ("BU", "D"): "DB",  ("BU", "F"): "FU",
+    ("BU", "R"): ["BR", "RU"],  ("BU", "L"): ["BL", "LU"],  ("BU", "D"): ["BD", "DB"],  ("BU", "F"): ["UF", "FU"],
     # kondisi "BR"
-    ("BR", "D"): "DR",  ("BR", "U"): "UR",  ("BR", "L"): "LB",  ("BR", "F"): "FR",
+    ("BR", "D"): ["BD", "DR"],  ("BR", "U"): ["BU", "UR"],  ("BR", "L"): ["BL", "LB"],  ("BR", "F"): ["RF", "FR"],
     # kondisi "BD"
-    ("BD", "L"): "LD",  ("BD", "R"): "RD",  ("BD", "U"): "UB",  ("BD", "F"): "FD",
+    ("BD", "L"): ["BL", "LD"],  ("BD", "R"): ["BR", "RD"],  ("BD", "U"): ["BU", "UB"],  ("BD", "F"): ["DF", "FD"],
     # kondisi "BL"
-    ("BL", "U"): "UL",  ("BL", "D"): "DL",  ("BL", "R"): "RB",  ("BL", "F"): "FL",
+    ("BL", "U"): ["BU", "UL"],  ("BL", "D"): ["BD", "DL"],  ("BL", "R"): ["BR", "RB"],  ("BL", "F"): ["LF", "FL"],
+    # ==========B==========
+
     # kondisi "RU"
-    ("RU", "F"): "FU",  ("RU", "B"): "BU",  ("RU", "D"): "DR",  ("RU", "L"): "LU",
+    ("RU", "F"): ["RF", "FU"],  ("RU", "B"): ["RB", "BU"],  ("RU", "D"): ["RD", "DR"],  ("RU", "L"): ["UL", "LU"],
     # kondisi "RF"
-    ("RF", "D"): "DF",  ("RF", "U"): "UF",  ("RF", "B"): "BR",  ("RF", "L"): "LF",
-    
+    ("RF", "D"): ["RD", "DF"],  ("RF", "U"): ["RU", "UF"],  ("RF", "B"): ["RB", "BR"],  ("RF", "L"): ["FL", "LF"],
     # kondisi "RD"
-    ("RD", "B"): "BD",  ("RD", "F"): "FD",  ("RD", "U"): "UR",  ("RD", "L"): "LD",
+    ("RD", "B"): ["RB", "BD"],  ("RD", "F"): ["RF", "FD"],  ("RD", "U"): ["RU", "UR"],  ("RD", "L"): ["DL", "LD"],
     # kondisi "RB"
-    ("RB", "U"): "UB",  ("RB", "D"): "DB",  ("RB", "F"): "FR",  ("RB", "L"): "LB",
+    ("RB", "U"): ["RU", "UB"],  ("RB", "D"): ["RD", "DB"],  ("RB", "F"): ["RF", "FR"],  ("RB", "L"): ["BL", "LB"],
+    # ==========R==========
+
     # kondisi "LU"
-    ("LU", "B"): "BU",  ("LU", "F"): "FU",  ("LU", "D"): "DL",  ("LU", "R"): "RU",
+    ("LU", "B"): ["LB", "BU"],  ("LU", "F"): ["LF", "FU"],  ("LU", "D"): ["LD", "DL"],  ("LU", "R"): ["UR", "RU"],
     # kondisi "LF"
-    ("LF", "U"): "UF",  ("LF", "D"): "DF",  ("LF", "B"): "LB",  ("LF", "R"): "RF",
+    ("LF", "U"): ["LU", "UF"],  ("LF", "D"): ["LD", "DF"],  ("LF", "B"): ["LB", "LB"],  ("LF", "R"): ["FR", "RF"],
     # kondisi "LD"
-    ("LD", "F"): "FD",  ("LD", "B"): "BD",  ("LD", "U"): "UL",  ("LD", "R"): "RD",
+    ("LD", "F"): ["LF", "FD"],  ("LD", "B"): ["LB", "BD"],  ("LD", "U"): ["LU", "UL"],  ("LD", "R"): ["DR", "RD"],
     # kondisi "LB"
-    ("LB", "D"): "DB",  ("LB", "U"): "UB",  ("LB", "F"): "FL",  ("LB", "R"): "RB",
+    ("LB", "D"): ["LD", "DB"],  ("LB", "U"): ["LU", "UB"],  ("LB", "F"): ["LF", "FL"],  ("LB", "R"): ["BR", "RB"],
+    # ==========L==========
 }
 
 re_orient = {
