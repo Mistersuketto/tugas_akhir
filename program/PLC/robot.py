@@ -1,5 +1,6 @@
 import re
 <<<<<<< HEAD
+<<<<<<< HEAD
 import time
 from fins import FinsClient # Menggunakan pustaka dari contoh sederhana Anda
 
@@ -14,10 +15,22 @@ def translate_algorithm(input_sequence):
     # ... (Semua kamus/peta Anda di sini: MOVE_MAP, ORIENTATION_TRANSITIONS, FACE_POSITIONS)
     # Kamus-kamus ini sangat panjang, jadi saya singkat di sini.
 =======
+=======
+import time
+from fins import FinsClient
+import struct # Diperlukan untuk mengubah data byte menjadi integer
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
 
+# ==============================================================================
+# TAHAP 1: FUNGSI PENERJEMAH ALGORITMA
+# (Tidak perlu diubah, salin fungsi 'translate_algorithm' lengkap Anda ke sini)
 def translate_algorithm(input_sequence):
+<<<<<<< HEAD
     # ... (Semua kamus/peta Anda di sini, tidak ada yang diubah karena sudah benar)
 >>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
+=======
+    # ... Logika lengkap Anda yang sudah benar ada di sini ...
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
     MOVE_MAP = {
         'U1': 'U', 'U2': 'U2', 'U3': "U'",
         'F1': 'F', 'F2': 'F2', 'F3': "F'",
@@ -27,6 +40,7 @@ def translate_algorithm(input_sequence):
         'L1': 'L', 'L2': 'L2', 'L3': "L'",
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
 
@@ -34,6 +48,9 @@ def translate_algorithm(input_sequence):
     # Mendefinisikan bagaimana rotasi kubus (a,b,c) mengubah orientasi
     # Format Kunci: (Orientasi Awal, Gerakan Rotasi)
 >>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
+=======
+    
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
     ORIENTATION_TRANSITIONS = {
         # Rotasi 'a' (Sumbu X)
         ('UF', 'a+90'): 'FD',    ('UF', 'a-90'): 'BU',
@@ -145,6 +162,7 @@ def translate_algorithm(input_sequence):
         'LD': {'U_pos': 'L', 'F_pos': 'D'},
         'LB': {'U_pos': 'L', 'F_pos': 'B'},
     }
+<<<<<<< HEAD
     
 <<<<<<< HEAD
     # -- Logika Utama Penerjemah --
@@ -163,14 +181,60 @@ def translate_algorithm(input_sequence):
             robot_move = move_code
             new_orientation = ORIENTATION_TRANSITIONS.get((current_orientation, robot_move))
 =======
+=======
+    # Placeholder singkat untuk demonstrasi
+    print("--- Proses Penerjemahan Langkah-demi-Langkah ---")
+    print("1. Langkah 'U1': Orientasi 'UF'. Gerakan robot -> 'U'")
+    print("2. Langkah 'a-90': Rotasi kubus. Orientasi berubah dari UF -> BU")
+    print("3. Langkah 'B3': Orientasi 'BU'. Gerakan robot -> 'U''")
+    return ['U', 'a-90', "U'"]
+# ==============================================================================
+
+
+# ==============================================================================
+# TAHAP 2: FUNGSI UTAMA UNTUK EKSEKUSI PLC (DENGAN PENYESUAIAN)
+# ==============================================================================
+
+def main() -> None:
+    # --- Peta Alamat PLC ---
+    ROBOT_MOVE_TO_PLC_ADDRESS = {
+        "U": "CIO10.0",   "U2": "CIO10.1",   "U'": "CIO10.2",
+        "F": "CIO10.3",   "F2": "CIO10.4",   "F'": "CIO10.5",
+        "a+90": "CIO10.6", "a-90": "CIO10.7",
+        "b+90": "CIO10.8", "b+180": "CIO10.9",
+        "b-90": "CIO10.10", "b-180": "CIO10.11",
+        "c+90": "CIO10.12", "c+180": "CIO10.13",
+        "c-90": "CIO10.14", "c-180": "CIO10.15",
+    }
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
     
-    for i, move_code in enumerate(moves):
-        robot_move = None # Inisialisasi variabel
-        # Cek apakah ini gerakan rotasi kubus (a, b, c)
-        if move_code[0] in ['a', 'b', 'c']:
-            robot_move = move_code
-            new_orientation = ORIENTATION_TRANSITIONS.get((current_orientation, robot_move))
+    # Alamat feedback diubah ke D0
+    FEEDBACK_ADDRESS = "D0"
+    
+    PLC_HOST = "192.168.1.28"
+    input_algo = "U1 a-90 B3"
+
+    # Terjemahkan algoritma
+    robot_moves = translate_algorithm(input_algo)
+    print("\n" + "="*40)
+    print(f"Hasil Terjemahan untuk Eksekusi: {robot_moves}")
+    print("="*40)
+    
+    # Eksekusi gerakan di PLC
+    client = None
+    try:
+        client = FinsClient(host=PLC_HOST)
+        client.connect()
+        print(f"\n✅ Terhubung ke PLC di {PLC_HOST} untuk eksekusi...")
+
+        # Pastikan D0 dalam keadaan 0 sebelum memulai
+        print(f"  -> Memastikan feedback di {FEEDBACK_ADDRESS} dalam keadaan awal (0)...")
+        client.memory_area_write(FEEDBACK_ADDRESS, b"\x00\x00")
+
+        for i, move in enumerate(robot_moves):
+            print(f"\n--- Eksekusi Langkah {i+1}/{len(robot_moves)}: '{move}' ---")
             
+<<<<<<< HEAD
 >>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
             if new_orientation:
                 print(f"{i+1}. Langkah '{move_code}': Rotasi kubus. Orientasi berubah dari {current_orientation} -> {new_orientation}")
@@ -292,16 +356,52 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 =======
+=======
+            command_address = ROBOT_MOVE_TO_PLC_ADDRESS.get(move)
+            if not command_address:
+                print(f"⚠️ Gerakan '{move}' tidak memiliki alamat PLC. Melewati...")
+                continue
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
             
-            print(f"{i+1}. Langkah '{standard_move}': Orientasi '{current_orientation}'. Gerakan robot -> '{robot_move}'")
+            # Nyalakan bit perintah
+            print(f"  -> Mengirim perintah dengan menyalakan bit {command_address}")
+            client.memory_area_write(command_address, b"\x01")
+
+            # TAHAP A: Tunggu sampai D0 kembali ke 0 (memastikan sinyal lama hilang)
+            print(f"  -> Memastikan sinyal lama di {FEEDBACK_ADDRESS} sudah hilang (menunggu nilai 0)...")
+            while True:
+                response = client.memory_area_read(FEEDBACK_ADDRESS, 1)
+                current_feedback_value = struct.unpack('>H', response.data)[0]
+                if current_feedback_value == 0:
+                    print(f"  -> Sinyal lama sudah hilang (Nilai {FEEDBACK_ADDRESS} adalah 0).")
+                    break
+                time.sleep(0.1) # Jeda singkat
+
+            # TAHAP B: Tunggu D0 menjadi 1 (menunggu sinyal baru)
+            print(f"  -> Menunggu sinyal baru di {FEEDBACK_ADDRESS} menjadi 1...")
+            while True:
+                response = client.memory_area_read(FEEDBACK_ADDRESS, 1)
+                current_feedback_value = struct.unpack('>H', response.data)[0]
+                if current_feedback_value == 1:
+                    print(f"  -> Sinyal baru diterima! (Nilai {FEEDBACK_ADDRESS} adalah 1)")
+                    break
+                time.sleep(0.1) # Jeda singkat
             
-        # PERBAIKAN: Pindahkan baris ini ke sini
-        if robot_move:
-            translated_moves.append(robot_move)
-        
-    return " ".join(translated_moves)
+            # Matikan kembali bit perintah
+            print(f"  -> Mereset bit perintah ({command_address} ke 0)")
+            client.memory_area_write(command_address, b"\x00")
+                        
+        print("\n✅ Semua langkah berhasil dieksekusi oleh PLC!")
+
+    except Exception as e:
+        print(f"❌ Terjadi kesalahan saat komunikasi dengan PLC: {e}")
+    finally:
+        if client: # <-- Cukup periksa apakah objek client ada
+            client.close()
+            print("🔌 Koneksi ke PLC ditutup.")
 
 
+<<<<<<< HEAD
 # --- CONTOH PENGGUNAAN ---
 input_algo = "U1 a-90 B3 c+90 L1 U2 a-90 D1 a-90 R3 b-90 F1 b-90 U3 b-90 B1 R3 b+90 U2 c-90 F2 U1 a-90 D2 a-90 B2 a-90 U1 B2 U1 a-90 F2 b-90 R2"
 
@@ -315,3 +415,7 @@ print(f"Input Asli      : {input_algo}")
 print(f"Hasil Terjemahan  : {hasil_terjemahan}")
 print("="*40)
 >>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
+=======
+if __name__ == "__main__":
+    main()
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
