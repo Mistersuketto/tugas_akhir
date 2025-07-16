@@ -1,226 +1,110 @@
-import re
+# PLC/plc_module.py
+
 import time
 from fins import FinsClient
 import struct # Diperlukan untuk mengubah data byte menjadi integer
 
 # ==============================================================================
-# TAHAP 1: FUNGSI PENERJEMAH ALGORITMA
-# (Tidak perlu diubah, salin fungsi 'translate_algorithm' lengkap Anda ke sini)
-def translate_algorithm(input_sequence):
-    # ... Logika lengkap Anda yang sudah benar ada di sini ...
-    MOVE_MAP = {
-        'U1': 'U', 'U2': 'U2', 'U3': "U'",
-        'F1': 'F', 'F2': 'F2', 'F3': "F'",
-        'D1': 'D', 'D2': 'D2', 'D3': "D'",
-        'B1': 'B', 'B2': 'B2', 'B3': "B'",
-        'R1': 'R', 'R2': 'R2', 'R3': "R'",
-        'L1': 'L', 'L2': 'L2', 'L3': "L'",
-    }
-    
-    ORIENTATION_TRANSITIONS = {
-        # Rotasi 'a' (Sumbu X)
-        ('UF', 'a+90'): 'FD',    ('UF', 'a-90'): 'BU',
-        ('UR', 'a+90'): 'RD',    ('UR', 'a-90'): 'LU',
-        ('UB', 'a+90'): 'BD',    ('UB', 'a-90'): 'FU',
-        ('UL', 'a+90'): 'LD',    ('UL', 'a-90'): 'RU',
-        ('DF', 'a+90'): 'FU',    ('DF', 'a-90'): 'BD',
-        ('DR', 'a+90'): 'RU',    ('DR', 'a-90'): 'LD',
-        ('DB', 'a+90'): 'BU',    ('DB', 'a-90'): 'FD',
-        ('DL', 'a+90'): 'LU',    ('DL', 'a-90'): 'RD',
-        ('FU', 'a+90'): 'UB',    ('FU', 'a-90'): 'DF',
-        ('FR', 'a+90'): 'RB',    ('FR', 'a-90'): 'LF',
-        ('FD', 'a+90'): 'DB',    ('FD', 'a-90'): 'UF',
-        ('FL', 'a+90'): 'LB',    ('FL', 'a-90'): 'RF',
-        ('BU', 'a+90'): 'UF',    ('BU', 'a-90'): 'DB',
-        ('BR', 'a+90'): 'RF',    ('BR', 'a-90'): 'LB',
-        ('BD', 'a+90'): 'DF',    ('BD', 'a-90'): 'UB',
-        ('BL', 'a+90'): 'LF',    ('BL', 'a-90'): 'RB',
-        ('RU', 'a+90'): 'UL',    ('RU', 'a-90'): 'DR',
-        ('RF', 'a+90'): 'FL',    ('RF', 'a-90'): 'BR',
-        ('RD', 'a+90'): 'DL',    ('RD', 'a-90'): 'UR',
-        ('RB', 'a+90'): 'BL',    ('RB', 'a-90'): 'FR',
-        ('LU', 'a+90'): 'UR',    ('LU', 'a-90'): 'DL',
-        ('LF', 'a+90'): 'FR',    ('LF', 'a-90'): 'LB',
-        ('LD', 'a+90'): 'DR',    ('LD', 'a-90'): 'UL',
-        ('LB', 'a+90'): 'BR',    ('LB', 'a-90'): 'FL',
-
-        # Rotasi 'b' (Sumbu Y)
-        ('UF', 'b+90'): 'UR',    ('UF', 'b-90'): 'UL',    ('UF', 'b+180'): 'UB',
-        ('UR', 'b+90'): 'UB',    ('UR', 'b-90'): 'UF',    ('UR', 'b+180'): 'UL',
-        ('UB', 'b+90'): 'UL',    ('UB', 'b-90'): 'UR',    ('UB', 'b+180'): 'UF',
-        ('UL', 'b+90'): 'UF',    ('UL', 'b-90'): 'UB',    ('UL', 'b+180'): 'UR',
-        ('DF', 'b+90'): 'DL',    ('DF', 'b-90'): 'DR',    ('DF', 'b+180'): 'DB',
-        ('DR', 'b+90'): 'DF',    ('DR', 'b-90'): 'DB',    ('DR', 'b+180'): 'DL',
-        ('DB', 'b+90'): 'DR',    ('DB', 'b-90'): 'DL',    ('DB', 'b+180'): 'DF',
-        ('DL', 'b+90'): 'DB',    ('DL', 'b-90'): 'DF',    ('DL', 'b+180'): 'DR',
-        ('FU', 'b+90'): 'FL',    ('FU', 'b-90'): 'FR',    ('FU', 'b+180'): 'FD',
-        ('FR', 'b+90'): 'FU',    ('FR', 'b-90'): 'FD',    ('FR', 'b+180'): 'FL',
-        ('FD', 'b+90'): 'FR',    ('FD', 'b-90'): 'FL',    ('FD', 'b+180'): 'FU',
-        ('FL', 'b+90'): 'FD',    ('FL', 'b-90'): 'FU',    ('FL', 'b+180'): 'FR',
-        ('BU', 'b+90'): 'BR',    ('BU', 'b-90'): 'BL',    ('BU', 'b+180'): 'BD',
-        ('BR', 'b+90'): 'BD',    ('BR', 'b-90'): 'BU',    ('BR', 'b+180'): 'BL',
-        ('BD', 'b+90'): 'BL',    ('BD', 'b-90'): 'BR',    ('BD', 'b+180'): 'BU',
-        ('BL', 'b+90'): 'BU',    ('BL', 'b-90'): 'BD',    ('BL', 'b+180'): 'BR',
-        ('RU', 'b+90'): 'RF',    ('RU', 'b-90'): 'RB',    ('RU', 'b+180'): 'RD',
-        ('RF', 'b+90'): 'RD',    ('RF', 'b-90'): 'RU',    ('RF', 'b+180'): 'RB',
-        ('RD', 'b+90'): 'RB',    ('RD', 'b-90'): 'RF',    ('RD', 'b+180'): 'RU',
-        ('RB', 'b+90'): 'RU',    ('RB', 'b-90'): 'RD',    ('RB', 'b+180'): 'RF',
-        ('LU', 'b+90'): 'LB',    ('LU', 'b-90'): 'LF',    ('LU', 'b+180'): 'LD',
-        ('LF', 'b+90'): 'LU',    ('LF', 'b-90'): 'LD',    ('LF', 'b+180'): 'LB',
-        ('LD', 'b+90'): 'LF',    ('LD', 'b-90'): 'LB',    ('LD', 'b+180'): 'LU',
-        ('LB', 'b+90'): 'LD',    ('LB', 'b-90'): 'LU',    ('LB', 'b+180'): 'LF',
-
-        # Rotasi 'c' (Sumbu Z)
-        ('UF', 'c-90'): 'RF',    ('UF', 'c+90'): 'LF',    ('UF', 'c+180'): 'DF',
-        ('UR', 'c-90'): 'BR',    ('UR', 'c+90'): 'FR',    ('UR', 'c+180'): 'DR',
-        ('UB', 'c-90'): 'LB',    ('UB', 'c+90'): 'RB',    ('UB', 'c+180'): 'DB',
-        ('UL', 'c-90'): 'FL',    ('UL', 'c+90'): 'BL',    ('UL', 'c+180'): 'DL',
-        ('DF', 'c-90'): 'LF',    ('DF', 'c+90'): 'RF',    ('DF', 'c+180'): 'UF',
-        ('DR', 'c-90'): 'FR',    ('DR', 'c+90'): 'BR',    ('DR', 'c+180'): 'UR',
-        ('DB', 'c-90'): 'RB',    ('DB', 'c+90'): 'LB',    ('DB', 'c+180'): 'UB',
-        ('DL', 'c-90'): 'BL',    ('DL', 'c+90'): 'FL',    ('DL', 'c+180'): 'UL',
-        ('FU', 'c-90'): 'LU',    ('FU', 'c+90'): 'RU',    ('FU', 'c+180'): 'BU',
-        ('FR', 'c-90'): 'UR',    ('FR', 'c+90'): 'DR',    ('FR', 'c+180'): 'BR',
-        ('FD', 'c-90'): 'RD',    ('FD', 'c+90'): 'LD',    ('FD', 'c+180'): 'BD',
-        ('FL', 'c-90'): 'DL',    ('FL', 'c+90'): 'UL',    ('FL', 'c+180'): 'BL',
-        ('BU', 'c-90'): 'RU',    ('BU', 'c+90'): 'LU',    ('BU', 'c+180'): 'FU',
-        ('BR', 'c-90'): 'DR',    ('BR', 'c+90'): 'UR',    ('BR', 'c+180'): 'FR',
-        ('BD', 'c-90'): 'LD',    ('BD', 'c+90'): 'RD',    ('BD', 'c+180'): 'FD',
-        ('BL', 'c-90'): 'UL',    ('BL', 'c+90'): 'DL',    ('BL', 'c+180'): 'FL',
-        ('RU', 'c-90'): 'FU',    ('RU', 'c+90'): 'BU',    ('RU', 'c+180'): 'LU',
-        ('RF', 'c-90'): 'DF',    ('RF', 'c+90'): 'UF',    ('RF', 'c+180'): 'LF',
-        ('RD', 'c-90'): 'BD',    ('RD', 'c+90'): 'FD',    ('RD', 'c+180'): 'LD',
-        ('RB', 'c-90'): 'UB',    ('RB', 'c+90'): 'DB',    ('RB', 'c+180'): 'LB',
-        ('LU', 'c-90'): 'BU',    ('LU', 'c+90'): 'FU',    ('LU', 'c+180'): 'RU',
-        ('LF', 'c-90'): 'UF',    ('LF', 'c+90'): 'DF',    ('LF', 'c+180'): 'RF',
-        ('LD', 'c-90'): 'FD',    ('LD', 'c+90'): 'BD',    ('LD', 'c+180'): 'RD',
-        ('LB', 'c-90'): 'DB',    ('LB', 'c+90'): 'UB',    ('LB', 'c+180'): 'RB',
-    }
-    # Logika ini harus diperluas untuk mencakup semua 24 kemungkinan orientasi.
-    # Untuk contoh ini, kita hanya definisikan yang relevan dari permintaan Anda.
-
-    # 3. PETA UNTUK POSISI SISI (FACE)
-    # Ini adalah "otak" dari penerjemah.
-    # Untuk setiap orientasi, sisi mana yang berada di posisi U dan F robot.
-    FACE_POSITIONS = {
-        'UF': {'U_pos': 'U', 'F_pos': 'F'},
-        'UR': {'U_pos': 'U', 'F_pos': 'R'},
-        'UB': {'U_pos': 'U', 'F_pos': 'B'},
-        'UL': {'U_pos': 'U', 'F_pos': 'L'},
-        'DF': {'U_pos': 'D', 'F_pos': 'F'},
-        'DR': {'U_pos': 'D', 'F_pos': 'R'},
-        'DB': {'U_pos': 'D', 'F_pos': 'B'},
-        'DL': {'U_pos': 'D', 'F_pos': 'L'},
-        'FU': {'U_pos': 'F', 'F_pos': 'U'},
-        'FR': {'U_pos': 'F', 'F_pos': 'R'},
-        'FD': {'U_pos': 'F', 'F_pos': 'D'},
-        'FL': {'U_pos': 'F', 'F_pos': 'L'},
-        'BU': {'U_pos': 'B', 'F_pos': 'U'},
-        'BR': {'U_pos': 'B', 'F_pos': 'R'},
-        'BD': {'U_pos': 'B', 'F_pos': 'D'},
-        'BL': {'U_pos': 'B', 'F_pos': 'L'},
-        'RU': {'U_pos': 'R', 'F_pos': 'U'},
-        'RF': {'U_pos': 'R', 'F_pos': 'F'},
-        'RD': {'U_pos': 'R', 'F_pos': 'D'},
-        'RB': {'U_pos': 'R', 'F_pos': 'B'},
-        'LU': {'U_pos': 'L', 'F_pos': 'U'},
-        'LF': {'U_pos': 'L', 'F_pos': 'F'},
-        'LD': {'U_pos': 'L', 'F_pos': 'D'},
-        'LB': {'U_pos': 'L', 'F_pos': 'B'},
-    }
-    # Placeholder singkat untuk demonstrasi
-    print("--- Proses Penerjemahan Langkah-demi-Langkah ---")
-    print("1. Langkah 'U1': Orientasi 'UF'. Gerakan robot -> 'U'")
-    print("2. Langkah 'a-90': Rotasi kubus. Orientasi berubah dari UF -> BU")
-    print("3. Langkah 'B3': Orientasi 'BU'. Gerakan robot -> 'U''")
-    return ['U', 'a-90', "U'"]
+# ## BAGIAN 1: FUNGSI UTAMA EKSEKUSI PLC ##
 # ==============================================================================
 
-
-# ==============================================================================
-# TAHAP 2: FUNGSI UTAMA UNTUK EKSEKUSI PLC (DENGAN PENYESUAIAN)
-# ==============================================================================
-
-def main() -> None:
+def execute_robot_moves(robot_script, plc_host="192.168.1.28"):
+    """
+    Menerima skrip perintah robot, terhubung ke PLC, dan mengeksekusi setiap gerakan.
+    @param robot_script: String berisi perintah yang dipisahkan spasi (misal: "a+90 U b-90 F2").
+    @param plc_host: Alamat IP dari PLC Omron.
+    @return: True jika semua perintah berhasil dikirim, False jika terjadi error.
+    """
     # --- Peta Alamat PLC ---
+    # Mendefinisikan alamat mana yang akan di-trigger untuk setiap perintah
     ROBOT_MOVE_TO_PLC_ADDRESS = {
         "U": "CIO10.0",   "U2": "CIO10.1",   "U'": "CIO10.2",
         "F": "CIO10.3",   "F2": "CIO10.4",   "F'": "CIO10.5",
-        "a+90": "CIO10.6", "a-90": "CIO10.7",
-        "b+90": "CIO10.8", "b+180": "CIO10.9",
-        "b-90": "CIO10.10", "b-180": "CIO10.11",
-        "c+90": "CIO10.12", "c+180": "CIO10.13",
-        "c-90": "CIO10.14", "c-180": "CIO10.15",
+        "D": "CIO11.0",   "D2": "CIO11.1",   "D'": "CIO11.2",
+        "B": "CIO11.3",   "B2": "CIO11.4",   "B'": "CIO11.5",
+        "R": "CIO12.0",   "R2": "CIO12.1",   "R'": "CIO12.2",
+        "L": "CIO12.3",   "L2": "CIO12.4",   "L'": "CIO12.5",
+        "a+90": "CIO13.0", "a-90": "CIO13.1",
+        "b+90": "CIO13.2", "b-90": "CIO13.3", "b+180": "CIO13.4", 
+        "c+90": "CIO13.5", "c-90": "CIO13.6", "c+180": "CIO13.7",
     }
     
-    # Alamat feedback diubah ke D0
     FEEDBACK_ADDRESS = "D0"
     
-    PLC_HOST = "192.168.1.28"
-    input_algo = "U1 a-90 B3"
-
-    # Terjemahkan algoritma
-    robot_moves = translate_algorithm(input_algo)
-    print("\n" + "="*40)
-    print(f"Hasil Terjemahan untuk Eksekusi: {robot_moves}")
-    print("="*40)
+    # Pisahkan string perintah menjadi daftar individual
+    moves_to_execute = robot_script.strip().split(' ')
     
-    # Eksekusi gerakan di PLC
     client = None
     try:
-        client = FinsClient(host=PLC_HOST)
+        print(f"[PLC] Mencoba terhubung ke PLC di {plc_host}...")
+        client = FinsClient(host=plc_host)
         client.connect()
-        print(f"\n✅ Terhubung ke PLC di {PLC_HOST} untuk eksekusi...")
+        print(f"[PLC] ✅ Berhasil terhubung.")
 
         # Pastikan D0 dalam keadaan 0 sebelum memulai
-        print(f"  -> Memastikan feedback di {FEEDBACK_ADDRESS} dalam keadaan awal (0)...")
-        client.memory_area_write(FEEDBACK_ADDRESS, b"\x00\x00")
+        print(f"[PLC] Memastikan feedback di {FEEDBACK_ADDRESS} dalam keadaan awal (0)...")
+        client.memory_area_write(FEEDBACK_ADDRESS, b"\x00\x00") # Menulis nilai 0 ke D0
 
-        for i, move in enumerate(robot_moves):
-            print(f"\n--- Eksekusi Langkah {i+1}/{len(robot_moves)}: '{move}' ---")
+        print(f"\n[PLC] Menerima {len(moves_to_execute)} perintah untuk dieksekusi: {moves_to_execute}")
+        print("-" * 40)
+
+        for i, move in enumerate(moves_to_execute):
+            print(f"--- Eksekusi Langkah {i+1}/{len(moves_to_execute)}: '{move}' ---")
             
             command_address = ROBOT_MOVE_TO_PLC_ADDRESS.get(move)
             if not command_address:
-                print(f"⚠️ Gerakan '{move}' tidak memiliki alamat PLC. Melewati...")
+                print(f"⚠️  Peringatan: Gerakan '{move}' tidak memiliki alamat PLC. Melewati...")
                 continue
             
             # Nyalakan bit perintah
             print(f"  -> Mengirim perintah dengan menyalakan bit {command_address}")
             client.memory_area_write(command_address, b"\x01")
 
-            # TAHAP A: Tunggu sampai D0 kembali ke 0 (memastikan sinyal lama hilang)
-            print(f"  -> Memastikan sinyal lama di {FEEDBACK_ADDRESS} sudah hilang (menunggu nilai 0)...")
+            # TAHAP A: Tunggu D0 kembali ke 0 (jika sebelumnya 1, pastikan sinyal lama hilang)
+            print(f"  -> Menunggu {FEEDBACK_ADDRESS} untuk siap (nilai 0)...")
             while True:
                 response = client.memory_area_read(FEEDBACK_ADDRESS, 1)
                 current_feedback_value = struct.unpack('>H', response.data)[0]
                 if current_feedback_value == 0:
-                    print(f"  -> Sinyal lama sudah hilang (Nilai {FEEDBACK_ADDRESS} adalah 0).")
                     break
-                time.sleep(0.1) # Jeda singkat
+                time.sleep(0.1)
 
-            # TAHAP B: Tunggu D0 menjadi 1 (menunggu sinyal baru)
-            print(f"  -> Menunggu sinyal baru di {FEEDBACK_ADDRESS} menjadi 1...")
+            # TAHAP B: Tunggu D0 menjadi 1 (konfirmasi dari PLC bahwa gerakan dimulai/selesai)
+            print(f"  -> Menunggu konfirmasi dari PLC ({FEEDBACK_ADDRESS} menjadi 1)...")
             while True:
                 response = client.memory_area_read(FEEDBACK_ADDRESS, 1)
                 current_feedback_value = struct.unpack('>H', response.data)[0]
                 if current_feedback_value == 1:
-                    print(f"  -> Sinyal baru diterima! (Nilai {FEEDBACK_ADDRESS} adalah 1)")
+                    print(f"  -> Konfirmasi diterima! (Nilai {FEEDBACK_ADDRESS} adalah 1)")
                     break
-                time.sleep(0.1) # Jeda singkat
+                time.sleep(0.1)
             
-            # Matikan kembali bit perintah
+            # Matikan kembali bit perintah (PLC akan mereset feedback D0 ke 0)
             print(f"  -> Mereset bit perintah ({command_address} ke 0)")
             client.memory_area_write(command_address, b"\x00")
                         
-        print("\n✅ Semua langkah berhasil dieksekusi oleh PLC!")
+        print("-" * 40)
+        print("\n[PLC] ✅ Semua langkah berhasil dieksekusi!")
+        return True
 
     except Exception as e:
-        print(f"❌ Terjadi kesalahan saat komunikasi dengan PLC: {e}")
+        print(f"\n[PLC] ❌ Terjadi kesalahan saat komunikasi dengan PLC: {e}")
+        return False
     finally:
-        if client: # <-- Cukup periksa apakah objek client ada
+        if client:
             client.close()
-            print("🔌 Koneksi ke PLC ditutup.")
+            print("[PLC] 🔌 Koneksi ke PLC ditutup.")
 
+
+# ==============================================================================
+# ## BAGIAN 2: BLOK EKSEKUSI (Untuk Testing Mandiri) ##
+# ==============================================================================
 
 if __name__ == "__main__":
-    main()
+    print(">>> Menjalankan modul PLC secara mandiri untuk pengujian...")
+    
+    # Contoh skrip perintah yang akan dihasilkan oleh modul algorithm
+    test_script = "a-90 U' b+90 F R2 c-90 L"
+    
+    # Panggil fungsi utama untuk eksekusi
+    execute_robot_moves(test_script)
