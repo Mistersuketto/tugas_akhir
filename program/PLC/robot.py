@@ -1,7 +1,17 @@
 import re
+import time
+from fins import FinsClient # Menggunakan pustaka dari contoh sederhana Anda
 
+# ==============================================================================
+# TAHAP 1: FUNGSI PENERJEMAH ALGORITMA (Tidak diubah, karena sudah berhasil)
+# ==============================================================================
 def translate_algorithm(input_sequence):
-    # ... (Semua kamus/peta Anda di sini, tidak ada yang diubah karena sudah benar)
+    """
+    Menerjemahkan sekuens algoritma kompleks menjadi gerakan dasar robot
+    dengan melacak orientasi kubus.
+    """
+    # ... (Semua kamus/peta Anda di sini: MOVE_MAP, ORIENTATION_TRANSITIONS, FACE_POSITIONS)
+    # Kamus-kamus ini sangat panjang, jadi saya singkat di sini.
     MOVE_MAP = {
         'U1': 'U', 'U2': 'U2', 'U3': "U'",
         'F1': 'F', 'F2': 'F2', 'F3': "F'",
@@ -10,10 +20,7 @@ def translate_algorithm(input_sequence):
         'R1': 'R', 'R2': 'R2', 'R3': "R'",
         'L1': 'L', 'L2': 'L2', 'L3': "L'",
     }
-
-    # 2. PETA UNTUK TRANSISI ORIENTASI
-    # Mendefinisikan bagaimana rotasi kubus (a,b,c) mengubah orientasi
-    # Format Kunci: (Orientasi Awal, Gerakan Rotasi)
+    
     ORIENTATION_TRANSITIONS = {
         # Rotasi 'a' (Sumbu X)
         ('UF', 'a+90'): 'FD',    ('UF', 'a-90'): 'BU',
@@ -126,27 +133,22 @@ def translate_algorithm(input_sequence):
         'LB': {'U_pos': 'L', 'F_pos': 'B'},
     }
     
-    # -- LOGIKA UTAMA DENGAN PERBAIKAN --
+    # -- Logika Utama Penerjemah --
     moves = re.findall(r'[A-Z]\d|[abc][+-]\d+', input_sequence)
     current_orientation = "UF"
     translated_moves = []
     
     print("--- Proses Penerjemahan Langkah-demi-Langkah ---")
-    
     for i, move_code in enumerate(moves):
-        robot_move = None # Inisialisasi variabel
-        # Cek apakah ini gerakan rotasi kubus (a, b, c)
+        robot_move = None
         if move_code[0] in ['a', 'b', 'c']:
             robot_move = move_code
             new_orientation = ORIENTATION_TRANSITIONS.get((current_orientation, robot_move))
-            
             if new_orientation:
                 print(f"{i+1}. Langkah '{move_code}': Rotasi kubus. Orientasi berubah dari {current_orientation} -> {new_orientation}")
                 current_orientation = new_orientation
             else:
                 print(f"Peringatan: Transisi dari '{current_orientation}' dengan gerakan '{robot_move}' belum terdefinisi.")
-            
-        # Jika bukan, ini adalah putaran sisi (U, F, B, dll.)
         else:
             standard_move = MOVE_MAP.get(move_code)
             if not standard_move: continue
@@ -155,32 +157,99 @@ def translate_algorithm(input_sequence):
             if not positions:
                 print(f"ERROR: Peta posisi untuk orientasi '{current_orientation}' tidak ditemukan.")
                 continue
-
             if positions['U_pos'] == required_face:
                 robot_move = 'U' + (standard_move[1:] if len(standard_move) > 1 else '')
             elif positions['F_pos'] == required_face:
                 robot_move = 'F' + (standard_move[1:] if len(standard_move) > 1 else '')
             else:
                 robot_move = f"[ERROR: {required_face} tidak terjangkau]"
-            
             print(f"{i+1}. Langkah '{standard_move}': Orientasi '{current_orientation}'. Gerakan robot -> '{robot_move}'")
-            
-        # PERBAIKAN: Pindahkan baris ini ke sini
         if robot_move:
             translated_moves.append(robot_move)
-        
-    return " ".join(translated_moves)
+            
+    return translated_moves
 
 
-# --- CONTOH PENGGUNAAN ---
-input_algo = "U1 a-90 B3 c+90 L1 U2 a-90 D1 a-90 R3 b-90 F1 b-90 U3 b-90 B1 R3 b+90 U2 c-90 F2 U1 a-90 D2 a-90 B2 a-90 U1 B2 U1 a-90 F2 b-90 R2"
+# ==============================================================================
+# TAHAP 2: FUNGSI UTAMA UNTUK EKSEKUSI PLC
+# ==============================================================================
 
-# Jalankan penerjemah
-hasil_terjemahan = translate_algorithm(input_algo)
+def main() -> None:
+    # --- Peta Alamat PLC ---
+    ROBOT_MOVE_TO_PLC_ADDRESS = {
+        "U": "CIO10.0",   "U2": "CIO10.1",   "U'": "CIO10.2",
+        "F": "CIO10.3",   "F2": "CIO10.4",   "F'": "CIO10.5",
+        "a+90": "CIO10.6", "a-90": "CIO10.7",
+        "b+90": "CIO10.8", "b+180": "CIO10.9",
+        "b-90": "CIO10.10", "b-180": "CIO10.11",
+        "c+90": "CIO10.12", "c+180": "CIO10.13",
+        "c-90": "CIO10.14", "c-180": "CIO10.15",
+    }
+    
+    # Alamat bit konfirmasi dari PLC
+    DONE_BIT = "CIO12.0"
+    
+    # Alamat IP PLC Anda
+    PLC_HOST = "192.168.1.28"
 
-print("\n" + "="*40)
-print("           HASIL AKHIR")
-print("="*40)
-print(f"Input Asli      : {input_algo}")
-print(f"Hasil Terjemahan  : {hasil_terjemahan}")
-print("="*40)
+    # Input algoritma yang akan dieksekusi
+    input_algo = "U1 a-90 B3" # Contoh singkat untuk demonstrasi
+
+    # 1. Terjemahkan algoritma menjadi gerakan robot
+    robot_moves = translate_algorithm(input_algo)
+    print("\n" + "="*40)
+    print(f"Hasil Terjemahan untuk Eksekusi: {robot_moves}")
+    print("="*40)
+    
+    # 2. Eksekusi gerakan di PLC
+    client = None
+    try:
+        client = FinsClient(host=PLC_HOST)
+        client.connect()
+        print(f"\n✅ Terhubung ke PLC di {PLC_HOST} untuk eksekusi...")
+
+        # Reset semua bit perintah sebelum memulai (opsional, tapi aman)
+        print("  -> Mereset semua bit perintah...")
+        for address in ROBOT_MOVE_TO_PLC_ADDRESS.values():
+            client.memory_area_write(address, b"\x00")
+        client.memory_area_write(DONE_BIT, b"\x00")
+
+
+        for i, move in enumerate(robot_moves):
+            print(f"\n--- Eksekusi Langkah {i+1}/{len(robot_moves)}: '{move}' ---")
+            
+            command_address = ROBOT_MOVE_TO_PLC_ADDRESS.get(move)
+            if not command_address:
+                print(f"⚠️ Gerakan '{move}' tidak memiliki alamat PLC. Melewati...")
+                continue
+            
+            # Nyalakan bit perintah
+            print(f"  -> Mengirim perintah dengan menyalakan bit {command_address}")
+            client.memory_area_write(command_address, b"\x01")
+            
+            # Tunggu sinyal "Done"
+            print(f"  -> Menunggu sinyal selesai dari PLC pada bit {DONE_BIT}...")
+            while True:
+                response = client.memory_area_read(DONE_BIT, 1)
+                if response.data == b'\x01':
+                    print("  -> Sinyal 'Done' diterima!")
+                    break
+                time.sleep(0.2)
+            
+            # Matikan kembali bit perintah dan bit 'Done'
+            print(f"  -> Mereset sinyal ({command_address} dan {DONE_BIT} ke 0)")
+            client.memory_area_write(command_address, b"\x00")
+            client.memory_area_write(DONE_BIT, b"\x00")
+            
+        print("\n✅ Semua langkah berhasil dieksekusi oleh PLC!")
+
+    except Exception as e:
+        print(f"❌ Terjadi kesalahan saat komunikasi dengan PLC: {e}")
+    finally:
+        if client and client.is_connected():
+            client.close()
+            print("🔌 Koneksi ke PLC ditutup.")
+
+
+if __name__ == "__main__":
+    main()
