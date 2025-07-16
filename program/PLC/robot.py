@@ -1,4 +1,5 @@
 import re
+<<<<<<< HEAD
 import time
 from fins import FinsClient # Menggunakan pustaka dari contoh sederhana Anda
 
@@ -12,6 +13,11 @@ def translate_algorithm(input_sequence):
     """
     # ... (Semua kamus/peta Anda di sini: MOVE_MAP, ORIENTATION_TRANSITIONS, FACE_POSITIONS)
     # Kamus-kamus ini sangat panjang, jadi saya singkat di sini.
+=======
+
+def translate_algorithm(input_sequence):
+    # ... (Semua kamus/peta Anda di sini, tidak ada yang diubah karena sudah benar)
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
     MOVE_MAP = {
         'U1': 'U', 'U2': 'U2', 'U3': "U'",
         'F1': 'F', 'F2': 'F2', 'F3': "F'",
@@ -20,7 +26,14 @@ def translate_algorithm(input_sequence):
         'R1': 'R', 'R2': 'R2', 'R3': "R'",
         'L1': 'L', 'L2': 'L2', 'L3': "L'",
     }
+<<<<<<< HEAD
     
+=======
+
+    # 2. PETA UNTUK TRANSISI ORIENTASI
+    # Mendefinisikan bagaimana rotasi kubus (a,b,c) mengubah orientasi
+    # Format Kunci: (Orientasi Awal, Gerakan Rotasi)
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
     ORIENTATION_TRANSITIONS = {
         # Rotasi 'a' (Sumbu X)
         ('UF', 'a+90'): 'FD',    ('UF', 'a-90'): 'BU',
@@ -133,22 +146,42 @@ def translate_algorithm(input_sequence):
         'LB': {'U_pos': 'L', 'F_pos': 'B'},
     }
     
+<<<<<<< HEAD
     # -- Logika Utama Penerjemah --
+=======
+    # -- LOGIKA UTAMA DENGAN PERBAIKAN --
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
     moves = re.findall(r'[A-Z]\d|[abc][+-]\d+', input_sequence)
     current_orientation = "UF"
     translated_moves = []
     
     print("--- Proses Penerjemahan Langkah-demi-Langkah ---")
+<<<<<<< HEAD
     for i, move_code in enumerate(moves):
         robot_move = None
         if move_code[0] in ['a', 'b', 'c']:
             robot_move = move_code
             new_orientation = ORIENTATION_TRANSITIONS.get((current_orientation, robot_move))
+=======
+    
+    for i, move_code in enumerate(moves):
+        robot_move = None # Inisialisasi variabel
+        # Cek apakah ini gerakan rotasi kubus (a, b, c)
+        if move_code[0] in ['a', 'b', 'c']:
+            robot_move = move_code
+            new_orientation = ORIENTATION_TRANSITIONS.get((current_orientation, robot_move))
+            
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
             if new_orientation:
                 print(f"{i+1}. Langkah '{move_code}': Rotasi kubus. Orientasi berubah dari {current_orientation} -> {new_orientation}")
                 current_orientation = new_orientation
             else:
                 print(f"Peringatan: Transisi dari '{current_orientation}' dengan gerakan '{robot_move}' belum terdefinisi.")
+<<<<<<< HEAD
+=======
+            
+        # Jika bukan, ini adalah putaran sisi (U, F, B, dll.)
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
         else:
             standard_move = MOVE_MAP.get(move_code)
             if not standard_move: continue
@@ -157,12 +190,17 @@ def translate_algorithm(input_sequence):
             if not positions:
                 print(f"ERROR: Peta posisi untuk orientasi '{current_orientation}' tidak ditemukan.")
                 continue
+<<<<<<< HEAD
+=======
+
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
             if positions['U_pos'] == required_face:
                 robot_move = 'U' + (standard_move[1:] if len(standard_move) > 1 else '')
             elif positions['F_pos'] == required_face:
                 robot_move = 'F' + (standard_move[1:] if len(standard_move) > 1 else '')
             else:
                 robot_move = f"[ERROR: {required_face} tidak terjangkau]"
+<<<<<<< HEAD
             print(f"{i+1}. Langkah '{standard_move}': Orientasi '{current_orientation}'. Gerakan robot -> '{robot_move}'")
         if robot_move:
             translated_moves.append(robot_move)
@@ -253,3 +291,27 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+=======
+            
+            print(f"{i+1}. Langkah '{standard_move}': Orientasi '{current_orientation}'. Gerakan robot -> '{robot_move}'")
+            
+        # PERBAIKAN: Pindahkan baris ini ke sini
+        if robot_move:
+            translated_moves.append(robot_move)
+        
+    return " ".join(translated_moves)
+
+
+# --- CONTOH PENGGUNAAN ---
+input_algo = "U1 a-90 B3 c+90 L1 U2 a-90 D1 a-90 R3 b-90 F1 b-90 U3 b-90 B1 R3 b+90 U2 c-90 F2 U1 a-90 D2 a-90 B2 a-90 U1 B2 U1 a-90 F2 b-90 R2"
+
+# Jalankan penerjemah
+hasil_terjemahan = translate_algorithm(input_algo)
+
+print("\n" + "="*40)
+print("           HASIL AKHIR")
+print("="*40)
+print(f"Input Asli      : {input_algo}")
+print(f"Hasil Terjemahan  : {hasil_terjemahan}")
+print("="*40)
+>>>>>>> e3c818a (berhasil membuat penerjemah hasil algoritma ke)
