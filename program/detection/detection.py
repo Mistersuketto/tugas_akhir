@@ -4,13 +4,17 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import time
+import os
 
 # ===================================================================
 # BAGIAN 1: PENGATURAN DAN KONFIGURASI (Tidak ada perubahan)
 # ===================================================================
 
 # Variabel konfigurasi tetap di sini agar bisa diakses oleh fungsi
-model = YOLO("best.pt")
+# Membuat path yang absolut dan kokoh ke file model
+model_path = os.path.join(os.path.dirname(__file__), "best.pt")
+model = YOLO(model_path)
+
 color_ranges = {
     'Putih':  [([0, 0, 150], [180, 55, 255])],
     'Kuning': [([22, 90, 100], [35, 255, 255])],
