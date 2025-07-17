@@ -1,0 +1,203 @@
+source env/bin/activate
+
+putih U
+merah R
+hijau F
+kuning D
+oranye L
+biru B
+
+00 > U      04 > F2         08 > b + 90     12 > c + 90
+01 > U2     05 > F'         09 > b + 180    13 > c + 180
+02 > U'     06 > a + 90     10 > b - 90     14 > c - 90
+03 > F      07 > a -90      11 > b -180     15 > c - 180
+
+# ===== NOTASI TAMBAHAN =====
+set_H1 = {
+    "UF": ["U", "F"],   "UR": ["U", "R"],   "UB": ["U", "B"],   "UL": ["U", "L"],
+    "DF": ["D", "F"],   "DR": ["D", "R"],   "DB": ["D", "B"],   "DL": ["D", "L"],
+    "FU": ["F", "U"],   "FR": ["F", "R"],   "FD": ["F", "D"],   "FL": ["F", "L"],
+    "BU": ["B", "U"],   "BR": ["B", "R"],   "BD": ["B", "D"],   "BL": ["B", "L"],
+    "RU": ["R", "U"],   "RF": ["R", "F"],   "RD": ["R", "D"],   "RB": ["R", "B"],
+    "LU": ["L", "U"],   "LF": ["L", "F"],   "LD": ["L", "D"],   "LB": ["L", "B"],
+}
+
+set_I1 = {
+    # kondisi "UF"
+    ("UF", "R"): ["UR", "RF"],  ("UF", "L"): ["UL", "LF"],  ("UF", "B"): ["UB", "BU"],  ("UF", "D"): ["FD", "DF"],
+    # kondisi "UR"
+    ("UR", "B"): ["UB", "BR"],  ("UR", "F"): ["UF", "FR"],  ("UR", "L"): ["UL", "LU"],  ("UR", "D"): ["RD", "DR"],
+    # kondisi "UB"
+    ("UB", "L"): ["UL", "LB"],  ("UB", "R"): ["UR", "RB"],  ("UB", "F"): ["UF", "FU"],  ("UB", "D"): ["BD", "DB"],
+    # kondisi "UL"
+    ("UL", "F"): ["UF", "FL"],  ("UL", "B"): ["UB", "BL"],  ("UL", "R"): ["UR", "RU"],  ("UL", "D"): ["LD", "DL"],
+    # ==========U==========
+
+    # kondisi "DF"
+    ("DF", "L"): ["DL", "LF"],  ("DF", "R"): ["DR", "RF"],  ("DF", "B"): ["DB", "BD"],  ("DF", "U"): ["FU", "UF"],
+    # kondisi "DR"
+    ("DR", "F"): ["DF", "FR"],  ("DR", "B"): ["DB", "BR"],  ("DR", "L"): ["DL", "LD"],  ("DR", "U"): ["RU", "UR"],
+    # kondisi "DB"
+    ("DB", "R"): ["DR", "RB"],  ("DB", "L"): ["DL", "LB"],  ("DB", "F"): ["DF", "FD"],  ("DB", "U"): ["BU", "UB"],
+    # kondisi "DL"
+    ("DL", "B"): ["DB", "BL"],  ("DL", "F"): ["DF", "FL"],  ("DL", "R"): ["DR", "RD"],  ("DL", "U"): ["LU", "UL"],
+    # ==========D==========
+
+    # kondisi "FU"
+    ("FU", "L"): ["FL", "LU"],  ("FU", "R"): ["FR", "RU"],  ("FU", "D"): ["FD", "DF"],  ("FU", "B"): ["UB", "BU"],
+    # kondisi "FR"
+    ("FR", "U"): ["FU", "UR"],  ("FR", "D"): ["FD", "DR"],  ("FR", "L"): ["FL", "LF"],  ("FR", "B"): ["RB", "BR"],
+    # kondisi "FD"
+    ("FD", "R"): ["FR", "RD"],  ("FD", "L"): ["FL", "LD"],  ("FD", "U"): ["FU", "UF"],  ("FD", "B"): ["DB", "BD"],
+    # kondisi "FL"
+    ("FL", "D"): ["FD", "DL"],  ("FL", "U"): ["FU", "UL"],  ("FL", "R"): ["FR", "RF"],  ("FL", "B"): ["LB", "BL"],
+    # ==========F==========
+
+    # kondisi "BU"
+    ("BU", "R"): ["BR", "RU"],  ("BU", "L"): ["BL", "LU"],  ("BU", "D"): ["BD", "DB"],  ("BU", "F"): ["UF", "FU"],
+    # kondisi "BR"
+    ("BR", "D"): ["BD", "DR"],  ("BR", "U"): ["BU", "UR"],  ("BR", "L"): ["BL", "LB"],  ("BR", "F"): ["RF", "FR"],
+    # kondisi "BD"
+    ("BD", "L"): ["BL", "LD"],  ("BD", "R"): ["BR", "RD"],  ("BD", "U"): ["BU", "UB"],  ("BD", "F"): ["DF", "FD"],
+    # kondisi "BL"
+    ("BL", "U"): ["BU", "UL"],  ("BL", "D"): ["BD", "DL"],  ("BL", "R"): ["BR", "RB"],  ("BL", "F"): ["LF", "FL"],
+    # ==========B==========
+
+    # kondisi "RU"
+    ("RU", "F"): ["RF", "FU"],  ("RU", "B"): ["RB", "BU"],  ("RU", "D"): ["RD", "DR"],  ("RU", "L"): ["UL", "LU"],
+    # kondisi "RF"
+    ("RF", "D"): ["RD", "DF"],  ("RF", "U"): ["RU", "UF"],  ("RF", "B"): ["RB", "BR"],  ("RF", "L"): ["FL", "LF"],
+    # kondisi "RD"
+    ("RD", "B"): ["RB", "BD"],  ("RD", "F"): ["RF", "FD"],  ("RD", "U"): ["RU", "UR"],  ("RD", "L"): ["DL", "LD"],
+    # kondisi "RB"
+    ("RB", "U"): ["RU", "UB"],  ("RB", "D"): ["RD", "DB"],  ("RB", "F"): ["RF", "FR"],  ("RB", "L"): ["BL", "LB"],
+    # ==========R==========
+
+    # kondisi "LU"
+    ("LU", "B"): ["LB", "BU"],  ("LU", "F"): ["LF", "FU"],  ("LU", "D"): ["LD", "DL"],  ("LU", "R"): ["UR", "RU"],
+    # kondisi "LF"
+    ("LF", "U"): ["LU", "UF"],  ("LF", "D"): ["LD", "DF"],  ("LF", "B"): ["LB", "LB"],  ("LF", "R"): ["FR", "RF"],
+    # kondisi "LD"
+    ("LD", "F"): ["LF", "FD"],  ("LD", "B"): ["LB", "BD"],  ("LD", "U"): ["LU", "UL"],  ("LD", "R"): ["DR", "RD"],
+    # kondisi "LB"
+    ("LB", "D"): ["LD", "DB"],  ("LB", "U"): ["LU", "UB"],  ("LB", "F"): ["LF", "FL"],  ("LB", "R"): ["BR", "RB"],
+    # ==========L==========
+}
+
+re_orient = {
+    # Rotasi 'a' (Sumbu X)
+    ("UF", "FD"): ("a+90", 2),    ("UF", "BU"): ("a-90", 2),
+    ("UR", "RD"): ("a+90", 2),    ("UR", "LU"): ("a-90", 2),
+    ("UB", "BD"): ("a+90", 2),    ("UB", "FU"): ("a-90", 2),
+    ("UL", "LD"): ("a+90", 2),    ("UL", "RU"): ("a-90", 2),
+    ("DF", "FU"): ("a+90", 2),    ("DF", "BD"): ("a-90", 2),
+    ("DR", "RU"): ("a+90", 2),    ("DR", "LD"): ("a-90", 2),
+    ("DB", "BU"): ("a+90", 2),    ("DB", "FD"): ("a-90", 2),
+    ("DL", "LU"): ("a+90", 2),    ("DL", "RD"): ("a-90", 2),
+    ("FU", "UB"): ("a+90", 2),    ("FU", "DF"): ("a-90", 2),
+    ("FR", "RB"): ("a+90", 2),    ("FR", "LF"): ("a-90", 2),
+    ("FD", "DB"): ("a+90", 2),    ("FD", "UF"): ("a-90", 2),
+    ("FL", "LB"): ("a+90", 2),    ("FL", "RF"): ("a-90", 2),
+    ("BU", "UF"): ("a+90", 2),    ("BU", "DB"): ("a-90", 2),
+    ("BR", "RF"): ("a+90", 2),    ("BR", "LB"): ("a-90", 2),
+    ("BD", "DF"): ("a+90", 2),    ("BD", "UB"): ("a-90", 2),
+    ("BL", "LF"): ("a+90", 2),    ("BL", "RB"): ("a-90", 2),
+    ("RU", "UL"): ("a+90", 2),    ("RU", "DR"): ("a-90", 2),
+    ("RF", "FL"): ("a+90", 2),    ("RF", "BR"): ("a-90", 2),
+    ("RD", "DL"): ("a+90", 2),    ("RD", "UR"): ("a-90", 2),
+    ("RB", "BL"): ("a+90", 2),    ("RB", "FR"): ("a-90", 2),
+    ("LU", "UR"): ("a+90", 2),    ("LU", "DL"): ("a-90", 2),
+    ("LF", "FR"): ("a+90", 2),    ("LF", "LB"): ("a-90", 2),
+    ("LD", "DR"): ("a+90", 2),    ("LD", "UL"): ("a-90", 2),
+    ("LB", "BR"): ("a+90", 2),    ("LB", "FL"): ("a-90", 2),
+
+    # Rotasi 'b' (Sumbu Y)
+    ("UF", "UR"): ("b+90", 2),    ("UF", "UL"): ("b-90", 2),    ("UF", "UB"): ("b+180", 3),
+    ("UR", "UB"): ("b+90", 2),    ("UR", "UF"): ("b-90", 2),    ("UR", "UL"): ("b+180", 3),
+    ("UB", "UL"): ("b+90", 2),    ("UB", "UR"): ("b-90", 2),    ("UB", "UF"): ("b+180", 3),
+    ("UL", "UF"): ("b+90", 2),    ("UL", "UB"): ("b-90", 2),    ("UL", "UR"): ("b+180", 3),
+    ("DF", "DL"): ("b+90", 2),    ("DF", "DR"): ("b-90", 2),    ("DF", "DB"): ("b+180", 3),
+    ("DR", "DF"): ("b+90", 2),    ("DR", "DB"): ("b-90", 2),    ("DR", "DL"): ("b+180", 3),
+    ("DB", "DR"): ("b+90", 2),    ("DB", "DL"): ("b-90", 2),    ("DB", "DF"): ("b+180", 3),
+    ("DL", "DB"): ("b+90", 2),    ("DL", "DF"): ("b-90", 2),    ("DL", "DR"): ("b+180", 3),
+    ("FU", "FL"): ("b+90", 2),    ("FU", "FR"): ("b-90", 2),    ("FU", "FD"): ("b+180", 3),
+    ("FR", "FU"): ("b+90", 2),    ("FR", "FD"): ("b-90", 2),    ("FR", "FL"): ("b+180", 3),
+    ("FD", "FR"): ("b+90", 2),    ("FD", "FL"): ("b-90", 2),    ("FD", "FU"): ("b+180", 3),
+    ("FL", "FD"): ("b+90", 2),    ("FL", "FU"): ("b-90", 2),    ("FL", "FR"): ("b+180", 3),
+    ("BU", "BR"): ("b+90", 2),    ("BU", "BL"): ("b-90", 2),    ("BU", "BD"): ("b+180", 3),
+    ("BR", "BD"): ("b+90", 2),    ("BR", "BU"): ("b-90", 2),    ("BR", "BL"): ("b+180", 3),
+    ("BD", "BL"): ("b+90", 2),    ("BD", "BR"): ("b-90", 2),    ("BD", "BU"): ("b+180", 3),
+    ("BL", "BU"): ("b+90", 2),    ("BL", "BD"): ("b-90", 2),    ("BL", "BR"): ("b+180", 3),
+    ("RU", "RF"): ("b+90", 2),    ("RU", "RB"): ("b-90", 2),    ("RU", "RD"): ("b+180", 3),
+    ("RF", "RD"): ("b+90", 2),    ("RF", "RU"): ("b-90", 2),    ("RF", "RB"): ("b+180", 3),
+    ("RD", "RB"): ("b+90", 2),    ("RD", "RF"): ("b-90", 2),    ("RD", "RU"): ("b+180", 3),
+    ("RB", "RU"): ("b+90", 2),    ("RB", "RD"): ("b-90", 2),    ("RB", "RF"): ("b+180", 3),
+    ("LU", "LB"): ("b+90", 2),    ("LU", "LF"): ("b-90", 2),    ("LU", "LD"): ("b+180", 3),
+    ("LF", "LU"): ("b+90", 2),    ("LF", "LD"): ("b-90", 2),    ("LF", "LB"): ("b+180", 3),
+    ("LD", "LF"): ("b+90", 2),    ("LD", "LB"): ("b-90", 2),    ("LD", "LU"): ("b+180", 3),
+    ("LB", "LD"): ("b+90", 2),    ("LB", "LU"): ("b-90", 2),    ("LB", "LF"): ("b+180", 3),
+
+    # Rotasi 'c' (Sumbu Z)
+    ("UF", "RF"): ("c-90", 2),    ("UF", "LF"): ("c+90", 2),    ("UF", "DF"): ("c+180", 3),
+    ("UR", "BR"): ("c-90", 2),    ("UR", "FR"): ("c+90", 2),    ("UR", "DR"): ("c+180", 3),
+    ("UB", "LB"): ("c-90", 2),    ("UB", "RB"): ("c+90", 2),    ("UB", "DB"): ("c+180", 3),
+    ("UL", "FL"): ("c-90", 2),    ("UL", "BL"): ("c+90", 2),    ("UL", "DL"): ("c+180", 3),
+    ("DF", "LF"): ("c-90", 2),    ("DF", "RF"): ("c+90", 2),    ("DF", "UF"): ("c+180", 3),
+    ("DR", "FR"): ("c-90", 2),    ("DR", "BR"): ("c+90", 2),    ("DR", "UR"): ("c+180", 3),
+    ("DB", "RB"): ("c-90", 2),    ("DB", "LB"): ("c+90", 2),    ("DB", "UB"): ("c+180", 3),
+    ("DL", "BL"): ("c-90", 2),    ("DL", "FL"): ("c+90", 2),    ("DL", "UL"): ("c+180", 3),
+    ("FU", "LU"): ("c-90", 2),    ("FU", "RU"): ("c+90", 2),    ("FU", "BU"): ("c+180", 3),
+    ("FR", "UR"): ("c-90", 2),    ("FR", "DR"): ("c+90", 2),    ("FR", "BR"): ("c+180", 3),
+    ("FD", "RD"): ("c-90", 2),    ("FD", "LD"): ("c+90", 2),    ("FD", "BD"): ("c+180", 3),
+    ("FL", "DL"): ("c-90", 2),    ("FL", "UL"): ("c+90", 2),    ("FL", "BL"): ("c+180", 3),
+    ("BU", "RU"): ("c-90", 2),    ("BU", "LU"): ("c+90", 2),    ("BU", "FU"): ("c+180", 3),
+    ("BR", "DR"): ("c-90", 2),    ("BR", "UR"): ("c+90", 2),    ("BR", "FR"): ("c+180", 3),
+    ("BD", "LD"): ("c-90", 2),    ("BD", "RD"): ("c+90", 2),    ("BD", "FD"): ("c+180", 3),
+    ("BL", "UL"): ("c-90", 2),    ("BL", "DL"): ("c+90", 2),    ("BL", "FL"): ("c+180", 3),
+    ("RU", "FU"): ("c-90", 2),    ("RU", "BU"): ("c+90", 2),    ("RU", "LU"): ("c+180", 3),
+    ("RF", "DF"): ("c-90", 2),    ("RF", "UF"): ("c+90", 2),    ("RF", "LF"): ("c+180", 3),
+    ("RD", "BD"): ("c-90", 2),    ("RD", "FD"): ("c+90", 2),    ("RD", "LD"): ("c+180", 3),
+    ("RB", "UB"): ("c-90", 2),    ("RB", "DB"): ("c+90", 2),    ("RB", "LB"): ("c+180", 3),
+    ("LU", "BU"): ("c-90", 2),    ("LU", "FU"): ("c+90", 2),    ("LU", "RU"): ("c+180", 3),
+    ("LF", "UF"): ("c-90", 2),    ("LF", "DF"): ("c+90", 2),    ("LF", "RF"): ("c+180", 3),
+    ("LD", "FD"): ("c-90", 2),    ("LD", "BD"): ("c+90", 2),    ("LD", "RD"): ("c+180", 3),
+    ("LB", "DB"): ("c-90", 2),    ("LB", "UB"): ("c+90", 2),    ("LB", "RB"): ("c+180", 3),
+}
+# ===== NOTASI TAMBAHAN =====
+
+# kondisi solved
+UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB
+
+# kondisi scrambled 1
+R U R2 L' U' D B' R2 L' D' F U R2 U R2 L2 U D2 R2 D
+BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF
+# langkah penyelesaian
+B U' L' D' R' D' L2 D' L F' L' D F2 R2 U R2 B2 U2 L2 F2 D' # kociemba
+R L' D' F' U' B2 D2 L B U R2 D' B2 D' B2 R2 D' F2 D' L2 U F2 L2 # twophase
+# yaskawa
+B       U'  L'      D'      R'      D'  L2      D'  L   F'      L'      D   F2      R2      U       R2  B2      U2      L2
+13 03,  02, 12 05,  06 05,  06 05,  02, 13 04,  02, 03, 14 05,  12 05,  00, 14 04,  14 04,  06 03,  01, 14 04,  12 04,  06 04,
+F2      D'
+12 04,  06 05
+
+# kondisi scrambled 2
+R F B' D B U D' L U' D' R F2 U2 L2 B2 U' D' L2 F2 D
+UUUBUUBRFDBBRRULDRLBLLFFDDFFFUFDRBDUBLDLLFRURLLRRBDFBD
+# langkah penyelesaian
+U B' L U2 D R' F U' B R' U2 F2 U D2 B2 U B2 U F2 R2 # kociemba
+U2 F' L B' R' U2 D' B' L F2 B2 D' R2 F2 U' L2 F2 D' R2 U' R2 L2 D' # twophase
+# yaskawa
+U   B'      L       U2  D       R'      F       U'      B       R'      U2  F2      U   D2      B2      U       B2  U   F2
+00, 13 05,  12 03,  01, 06 03,  06 05,  12 03,  06 05,  06 03,  14 05,  01, 14 04,  00, 06 04,  06 04,  06 05,  01, 03, 06 04,
+R2
+14 04
+
+# kondisi scrambled 3
+L' B' R2 U2 F2 L U2 F U' B2 L D2 L B2 D2 F2 D2 L2 D2
+ULUDURLRRBDRRRRBUDFBDBFFULLFFUUDBFBLRFDULLDLLBDFUBFBDR
+# langkah penyelesaian
+B' U' D L' D L B2 L U' B' L F2 D B2 U' F2 R2 D' R2 B2 D2 # kociemba
+R' B D2 F2 B2 R2 U' F L' F2 U' L2 U2 B2 D' R2 D R2 D' L2 D L2 # twophase
+# yaskawa
+B'      U'  D       L'      D   L   B2      L   U'      B'  L       F2      D       B2      U'      F2      R2      D'      R2  B2      D2
+13 05,  02, 06 03,  10 02,  03, 00, 14 04,  00, 08 02,  05, 12 03,  12 04,  06 03,  06 04,  06 05,  06 04,  10 01,  12 05,  01, 10 01,  04
