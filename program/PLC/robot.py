@@ -3,6 +3,10 @@
 import time
 from fins import FinsClient
 import struct # Diperlukan untuk mengubah data byte menjadi integer
+<<<<<<< HEAD
+=======
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
+>>>>>>> main
 
 # ==============================================================================
 # ## BAGIAN 1: FUNGSI UTAMA EKSEKUSI PLC ##
@@ -55,6 +59,10 @@ def execute_robot_moves(robot_script, plc_host="192.168.1.28"):
             if not command_address:
                 print(f"⚠️  Peringatan: Gerakan '{move}' tidak memiliki alamat PLC. Melewati...")
                 continue
+<<<<<<< HEAD
+=======
+>>>>>>> 65d8c24 (hasil terjemahan berhasil diubah ke alamat PLC dan)
+>>>>>>> main
             
             # Nyalakan bit perintah
             print(f"  -> Mengirim perintah dengan menyalakan bit {command_address}")
