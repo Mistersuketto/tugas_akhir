@@ -1,51 +1,42 @@
-# main.py
-
-# --- Impor Modul ---
+# --- 1. Impor Semua Modul Fungsional ---
 from detection.detection import jalankan_proses_deteksi
 from algorithm.algorithm import dapatkan_solusi_robot
-# from PLC.plc_module import execute_robot_moves # Untuk langkah selanjutnya
+from PLC.robot import jalankan_penerjemah_dan_plc # <-- Ganti nama fungsi ini
 
-def main():
+def run_main_process():
     """
-    Fungsi utama yang menjalankan seluruh alur kerja.
+    Fungsi utama yang menjalankan seluruh alur kerja dari awal hingga akhir.
     """
-    print("=============================================")
-    print("MEMULAI PROGRAM PENYELESAIAN RUBIK OTOMATIS")
-    print("=============================================\n")
+    print("="*50)
+    print("🤖 MEMULAI PROGRAM PENYELESAIAN RUBIK OTOMATIS 🤖")
+    print("="*50 + "\n")
 
     # --- LANGKAH 1: DETEKSI ---
-    print("--- LANGKAH 1: Mendeteksi Kondisi Rubik ---")
+    print("--- [TAHAP 1/3] Mendeteksi Kondisi Rubik dari Kamera ---")
     current_cube_state = jalankan_proses_deteksi()
-
     if not current_cube_state:
-        print("\nProses deteksi gagal atau dibatalkan. Program berhenti.")
-        return
+        print("\n❌ Proses deteksi gagal atau dibatalkan. Program berhenti."); return
 
-    print("\nStatus: Deteksi berhasil. String yang diterima:")
-    print(f"-> {current_cube_state}\n")
+    print("\n[✔] Deteksi berhasil.\n")
 
-    # --- LANGKAH 2: SOLVER ---
-    print("--- LANGKAH 2: Mencari Solusi Optimal untuk Robot ---")
-    # Panggil fungsi dari modul solver dengan output dari langkah 1
-    robot_solution_script = dapatkan_solusi_robot(current_cube_state)
+    # --- LANGKAH 2: SOLVER & OPTIMASI ROBOTIK ---
+    print("--- [TAHAP 2/3] Mencari Solusi Optimal untuk Robot ---")
+    optimal_script = dapatkan_solusi_robot(current_cube_state)
+    if not optimal_script:
+        print("\n❌ Proses solving gagal menemukan solusi. Program berhenti."); return
+        
+    print(f"\n[✔] Solusi optimal berhasil dibuat: {optimal_script}\n")
 
-    if not robot_solution_script:
-        print("\nProses solving gagal menemukan solusi. Program berhenti.")
-        return
+    # --- LANGKAH 3: PENERJEMAHAN & EKSEKUSI PLC ---
+    print("--- [TAHAP 3/3] Menerjemahkan & Mengeksekusi Gerakan via PLC ---")
+    # Panggil fungsi utama dari modul PLC dengan hasil dari tahap 2
+    success = jalankan_penerjemah_dan_plc(optimal_script)
+    if not success:
+        print("\n❌ Proses PLC gagal. Periksa koneksi atau logika PLC."); return
 
-    print("\nStatus: Solusi robotik berhasil dibuat. Skrip perintah:")
-    print(f"-> {robot_solution_script}\n")
-
-    # --- LANGKAH 3: KONTROL PLC (Placeholder untuk sekarang) ---
-    print("--- LANGKAH 3: Mengeksekusi Gerakan Robot via PLC ---")
-    print(f"Skrip '{robot_solution_script}' akan dikirim ke PLC...")
-    # execute_robot_moves(robot_solution_script)
-    print("Status: Langkah PLC akan diimplementasikan di sini.\n")
-
-    print("=============================================")
-    print("PROSES SELESAI.")
-    print("=============================================")
-
+    print("\n" + "="*50)
+    print("🎉 SELAMAT! SEMUA PROSES SELESAI. RUBIK TELAH DISELESAIKAN! 🎉")
+    print("="*50)
 
 if __name__ == "__main__":
-    main()
+    run_main_process()
