@@ -115,7 +115,7 @@ def execute_on_plc(robot_script, plc_host):
         "U": "CIO10.0",     "U2": "CIO10.1",    "U'": "CIO10.2",
         "F": "CIO10.3",     "F2": "CIO10.4",    "F'": "CIO10.5",
         "a+90": "CIO10.6",  "a-90": "CIO10.7",  "b+90": "CIO10.8",      "b+180": "CIO10.9",
-        "b-90": "CIO10.10", "c+90": "CIO10.12", "c+180": "CIO10.13",    "c-90": "CIO10.14",
+        "b-90": "CIO10.10", "c+90": "CIO10.11", "c+180": "CIO10.12",    "c-90": "CIO10.13",
     }
     FEEDBACK_ADDRESS = "D0"
     moves_to_execute = robot_script.strip().split(' ')
@@ -181,5 +181,5 @@ def jalankan_penerjemah_dan_plc(optimal_script, plc_host="192.168.1.28"):
 if __name__ == "__main__":
     print(">>> Menjalankan modul PLC & Translator secara mandiri untuk pengujian...")
     # Contoh input yang seharusnya datang dari modul algorithm.py
-    test_input = "U3 c-90 R1 c-90 D2"
+    test_input = "U3 c-90 R1 c-90 D2 c-90 L3 F3 b-90 D1 L2 b-90 B2 b-90 U1 a+90 R1 U1 a-90 L2 a-90 D2 a-90 R2 b-90 F3 R2 F1 R2 F2 c-90 D2 F3"
     jalankan_penerjemah_dan_plc(test_input)
