@@ -19,11 +19,11 @@ model = YOLO(model_path) # Memuat model YOLO yang sudah dilatih.
 # Setiap warna memiliki rentang nilai [lower_bound, upper_bound].
 color_ranges = {
     'Biru':   [([89, 80, 50], [109, 255, 255])],
-    'Putih':  [([91, 0, 150], [111, 55, 255])],
-    'Hijau':  [([35, 80, 50], [55, 255, 255])],
-    'Kuning': [([20, 90, 100], [37, 255, 255])],
-    'Merah':  [([149, 48, 128], [169, 255, 255])],
-    'Oranye': [([3, 120, 70], [20, 255, 255])]
+    'Putih':  [([91, 0, 100], [111, 65, 255])],
+    'Oranye': [([3, 100, 70], [24, 255, 255])],
+    'Kuning': [([25, 155, 125], [37, 255, 255])],
+    'Hijau':  [([40, 80, 50], [55, 255, 255])],
+    'Merah':  [([149, 48, 128], [169, 255, 255])]
 }
 
 # Memetakan nama warna ke notasi standar Kociemba (U, D, F, B, R, L).
