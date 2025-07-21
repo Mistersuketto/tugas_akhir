@@ -1,73 +1,73 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.0.9">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0" version="28.0.6">
   <diagram name="Page-1" id="s-MjfnsGMyB_vt0coPaF">
     <mxGraphModel dx="988" dy="619" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="nyj_APtNYX1f8QDApb6_-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-1" target="nyj_APtNYX1f8QDApb6_-5">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-1" target="nyj_APtNYX1f8QDApb6_-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-1" value="MULAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=43;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-1" value="MULAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="200" y="50" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-3" value="SELESAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=43;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-3" value="SELESAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="400" y="535" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-4" target="nyj_APtNYX1f8QDApb6_-8">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-4" target="nyj_APtNYX1f8QDApb6_-8" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-4" value="Warna tiap&lt;div&gt;sisi rubik&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-4" value="Warna tiap&lt;div&gt;sisi rubik&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="340" width="120" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-5" target="nyj_APtNYX1f8QDApb6_-22">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-5" target="nyj_APtNYX1f8QDApb6_-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-5" value="&lt;i&gt;Webcam&amp;nbsp;&lt;/i&gt;mendeteksi posisi tiap sisi rubik menggunakan YOLO" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-5" value="&lt;i&gt;Webcam&amp;nbsp;&lt;/i&gt;mendeteksi posisi tiap sisi rubik menggunakan YOLO" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="150" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-8" target="nyj_APtNYX1f8QDApb6_-12">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-8" target="nyj_APtNYX1f8QDApb6_-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-8" value="Warna tiap sisi rubik diubah ke bentuk digital (data &lt;i&gt;string&lt;/i&gt;)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-8" value="Warna tiap sisi rubik diubah ke bentuk digital (data &lt;i&gt;string&lt;/i&gt;)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="430" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-10" target="nyj_APtNYX1f8QDApb6_-15">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-10" target="nyj_APtNYX1f8QDApb6_-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-10" value="Data &lt;i&gt;string&lt;/i&gt;&amp;nbsp;dimasukkan ke dalam algoritma kociemba" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-10" value="Data &lt;i&gt;string&lt;/i&gt;&amp;nbsp;dimasukkan ke dalam algoritma kociemba" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="400" y="150" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-12" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-12" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="235" y="530" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-13" target="nyj_APtNYX1f8QDApb6_-10">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-13" target="nyj_APtNYX1f8QDApb6_-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-13" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-13" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="435" y="55" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-15" target="nyj_APtNYX1f8QDApb6_-17">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-15" target="nyj_APtNYX1f8QDApb6_-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-15" value="Proses perhitungan algoritma menghasilkan langkah penyelesaian" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-15" value="Proses perhitungan algoritma menghasilkan langkah penyelesaian" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="400" y="245" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-17" target="nyj_APtNYX1f8QDApb6_-29">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-17" target="nyj_APtNYX1f8QDApb6_-29" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-17" value="Langkah penyelesaian diubah menjadi program PLC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-17" value="Langkah penyelesaian diubah menjadi program PLC" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="400" y="340" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-22" target="nyj_APtNYX1f8QDApb6_-4">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-22" target="nyj_APtNYX1f8QDApb6_-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-22" value="Warna tiap sisi rubik dideteksi menggunakan segmentasi HSV" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-22" value="Warna tiap sisi rubik dideteksi menggunakan segmentasi HSV" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="245" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nyj_APtNYX1f8QDApb6_-29" target="nyj_APtNYX1f8QDApb6_-3">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="nyj_APtNYX1f8QDApb6_-29" target="nyj_APtNYX1f8QDApb6_-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="nyj_APtNYX1f8QDApb6_-29" value="Program PLC&lt;div&gt;memberi sinyal&lt;/div&gt;&lt;div&gt;gerakan robot lengan&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="nyj_APtNYX1f8QDApb6_-29" value="Program PLC&lt;div&gt;memberi sinyal&lt;/div&gt;&lt;div&gt;gerakan robot lengan&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="385" y="440" width="150" height="60" as="geometry" />
         </mxCell>
       </root>
