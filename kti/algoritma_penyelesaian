@@ -1,19 +1,19 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.1.4">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0" version="28.0.6">
   <diagram name="Page-1" id="0NPg0UY2sOt2amjYPHM6">
-    <mxGraphModel dx="1317" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="988" dy="619" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-1" target="pCH7NkRtJDLH3sqjgGzP-1">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-1" target="pCH7NkRtJDLH3sqjgGzP-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-1" value="MULAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=28;" parent="1" vertex="1">
+        <mxCell id="vgrATZOTOxpqeDebkRXX-1" value="MULAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="60" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-2" value="SELESAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=28;" parent="1" vertex="1">
+        <mxCell id="vgrATZOTOxpqeDebkRXX-2" value="SELESAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="220" y="605" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-3" target="vgrATZOTOxpqeDebkRXX-24">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-3" target="vgrATZOTOxpqeDebkRXX-24" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-3" value="&amp;nbsp; &amp;nbsp;Langkah penyelesaian hasil perhitungan&lt;div&gt;algoritma kociemba&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
@@ -34,7 +34,7 @@
         <mxCell id="vgrATZOTOxpqeDebkRXX-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-8" target="vgrATZOTOxpqeDebkRXX-11" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-8" target="vgrATZOTOxpqeDebkRXX-7">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-8" target="vgrATZOTOxpqeDebkRXX-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-8" value="Apakah langkah penyelesaian = sisi rubik yang aktif?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -69,46 +69,46 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-17" value="Apakah masih&lt;div&gt;ada&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;langkah&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;penyelesaian?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="vgrATZOTOxpqeDebkRXX-17" value="Apakah&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;langkah&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;penyelesaian sudah&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;selesai?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="485" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-21" value="tidak" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="280" y="575" width="50" height="30" as="geometry" />
+        <mxCell id="vgrATZOTOxpqeDebkRXX-21" value="ya" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="285" y="575" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-22" value="ya" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="360" y="490" width="40" height="30" as="geometry" />
+        <mxCell id="vgrATZOTOxpqeDebkRXX-22" value="tidak" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="355" y="490" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-24" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="100" y="660" width="40" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-26" target="vgrATZOTOxpqeDebkRXX-5">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-26" target="vgrATZOTOxpqeDebkRXX-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-26" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="260" y="80" width="40" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pCH7NkRtJDLH3sqjgGzP-1" target="pCH7NkRtJDLH3sqjgGzP-3">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pCH7NkRtJDLH3sqjgGzP-1" target="pCH7NkRtJDLH3sqjgGzP-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-1" value="Mendefinisikan notasi gerakan memutar rubik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-1" value="Mendefinisikan notasi gerakan memutar rubik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="160" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pCH7NkRtJDLH3sqjgGzP-3" target="pCH7NkRtJDLH3sqjgGzP-5">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pCH7NkRtJDLH3sqjgGzP-3" target="pCH7NkRtJDLH3sqjgGzP-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-3" value="Mendefinisikan sisi aktif rubik dari kondisi mekanik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-3" value="Mendefinisikan sisi aktif rubik dari kondisi mekanik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="260" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pCH7NkRtJDLH3sqjgGzP-5" target="pCH7NkRtJDLH3sqjgGzP-7">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pCH7NkRtJDLH3sqjgGzP-5" target="pCH7NkRtJDLH3sqjgGzP-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-5" value="Mendefinisikan set gerakan untuk mengubah sisi aktif rubik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-5" value="Mendefinisikan set gerakan untuk mengubah sisi aktif rubik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="360" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pCH7NkRtJDLH3sqjgGzP-7" target="vgrATZOTOxpqeDebkRXX-3">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pCH7NkRtJDLH3sqjgGzP-7" target="vgrATZOTOxpqeDebkRXX-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-7" value="Memodelkan kondisi rubik berdasarkan sisi aktif dan gerakan mengubah sisi rubik" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pCH7NkRtJDLH3sqjgGzP-7" value="Memodelkan kondisi rubik berdasarkan sisi aktif dan gerakan mengubah sisi rubik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="460" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
