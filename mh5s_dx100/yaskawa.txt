@@ -1,0 +1,3 @@
+editing mode: 00000000
+
+management mode: 99999999
