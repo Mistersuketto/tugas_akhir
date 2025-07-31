@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0" version="28.0.7">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0" version="28.0.7">
   <diagram name="Page-1" id="0NPg0UY2sOt2amjYPHM6">
-    <mxGraphModel dx="991" dy="656" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1367" dy="801" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -11,7 +11,7 @@
           <mxGeometry x="60" y="60" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-2" value="SELESAI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
-          <mxGeometry x="430" y="755" width="120" height="60" as="geometry" />
+          <mxGeometry x="540" y="650" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="pCH7NkRtJDLH3sqjgGzP-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-3" target="vgrATZOTOxpqeDebkRXX-24" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -19,78 +19,67 @@
         <mxCell id="vgrATZOTOxpqeDebkRXX-3" value="Data&amp;nbsp;&lt;i&gt;string&lt;/i&gt;&amp;nbsp;dari hasil deteksi menggunakan kamera" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="45" y="560" width="150" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="knBKK9tjblJdEiCFES1p-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-5" target="knBKK9tjblJdEiCFES1p-4">
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-5" target="vgrATZOTOxpqeDebkRXX-8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-5" value="Identifikasi langkah penyelesaian hasil perhitungan secara berurutan" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="260" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-7" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="635" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-7" target="vgrATZOTOxpqeDebkRXX-17">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-7" value="Eksekusi langkah penyelesaian" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="430" y="535" width="120" height="60" as="geometry" />
+          <mxGeometry x="220" y="460" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="vgrATZOTOxpqeDebkRXX-11" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="570" y="450" as="sourcePoint" />
-          </mxGeometry>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-8" target="vgrATZOTOxpqeDebkRXX-7">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCH7NkRtJDLH3sqjgGzP-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="vgrATZOTOxpqeDebkRXX-7" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="490" as="sourcePoint" />
-          </mxGeometry>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-8" target="vgrATZOTOxpqeDebkRXX-11">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-8" value="Apakah langkah penyelesaian = sisi rubik yang aktif?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="345" y="405" width="160" height="80" as="geometry" />
+          <mxGeometry x="200" y="350" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-11" edge="1">
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-11">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="390" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="670" y="390" />
-            </Array>
+            <mxPoint x="440" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-11" value="Ubah sisi aktif rubik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="610" y="420" width="120" height="60" as="geometry" />
+          <mxGeometry x="380" y="360" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-15" value="tidak" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="560" y="420" width="50" height="30" as="geometry" />
+          <mxGeometry x="330" y="360" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-16" value="ya" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="490" y="505" width="40" height="30" as="geometry" />
+          <mxGeometry x="280" y="430" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="vgrATZOTOxpqeDebkRXX-2" edge="1">
+        <mxCell id="vgrATZOTOxpqeDebkRXX-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" edge="1" source="vgrATZOTOxpqeDebkRXX-17">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="715" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="vgrATZOTOxpqeDebkRXX-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="670" y="390" as="targetPoint" />
+            <mxPoint x="280" y="330" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="750" y="675" />
-              <mxPoint x="750" y="390" />
+              <mxPoint x="520" y="590" />
+              <mxPoint x="520" y="330" />
             </Array>
-            <mxPoint x="570" y="675" as="sourcePoint" />
+            <mxPoint x="510" y="620" as="sourcePoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-17" target="a7zV6Kgf1DXBz3MDzF86-9">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-17" value="Apakah&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;langkah&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;penyelesaian sudah&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;selesai?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="300" y="645" width="160" height="80" as="geometry" />
+          <mxGeometry x="200" y="550" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-21" value="ya" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="495" y="725" width="40" height="30" as="geometry" />
+          <mxGeometry x="280" y="630" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-22" value="tidak" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="565" y="640" width="50" height="30" as="geometry" />
+          <mxGeometry x="360" y="560" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-24" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="100" y="660" width="40" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="knBKK9tjblJdEiCFES1p-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vgrATZOTOxpqeDebkRXX-26" target="knBKK9tjblJdEiCFES1p-1">
+        <mxCell id="knBKK9tjblJdEiCFES1p-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="vgrATZOTOxpqeDebkRXX-26" target="knBKK9tjblJdEiCFES1p-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vgrATZOTOxpqeDebkRXX-26" value="A" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
@@ -120,14 +109,50 @@
         <mxCell id="pCH7NkRtJDLH3sqjgGzP-7" value="Memodelkan kondisi rubik berdasarkan sisi aktif dan gerakan mengubah sisi rubik" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="460" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="knBKK9tjblJdEiCFES1p-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="knBKK9tjblJdEiCFES1p-1" target="vgrATZOTOxpqeDebkRXX-5">
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="knBKK9tjblJdEiCFES1p-1" target="vgrATZOTOxpqeDebkRXX-5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="knBKK9tjblJdEiCFES1p-1" value="Algoritma kociemba menghitung langkah penyelesaian dari data input&amp;nbsp;&lt;i&gt;string&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="knBKK9tjblJdEiCFES1p-1" value="Algoritma kociemba menghitung langkah penyelesaian dari data input&amp;nbsp;&lt;i&gt;string&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="160" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="knBKK9tjblJdEiCFES1p-4" value="Identifikasi langkah penyelesaian hasil perhitungan secara berurutan" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="220" y="360" width="120" height="60" as="geometry" />
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-9" value="B" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="260" y="660" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-12" target="a7zV6Kgf1DXBz3MDzF86-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-12" value="B" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="580" y="80" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-14" target="a7zV6Kgf1DXBz3MDzF86-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-14" value="Menyesuaikan hasil langkah penyelesaian baru dengan program PLC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="260" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-16" target="a7zV6Kgf1DXBz3MDzF86-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-16" value="&lt;div&gt;Langkah penyelesaian yang sesuai dengan&lt;/div&gt;&lt;div&gt;model kondisi rubik&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="525" y="160" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-19" target="a7zV6Kgf1DXBz3MDzF86-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-19" value="Urutan pemanggilan program PLC sesuai langkah penyelesaian" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="525" y="360" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-21" target="a7zV6Kgf1DXBz3MDzF86-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-21" value="Memanggil program robot lengan sesuai program PLC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="a7zV6Kgf1DXBz3MDzF86-22" target="vgrATZOTOxpqeDebkRXX-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7zV6Kgf1DXBz3MDzF86-22" value="&lt;div&gt;Eksekusi gerakan penyelesaian oleh robot lengan&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="560" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
