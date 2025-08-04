@@ -1,0 +1,7 @@
+1. Gripper
+  a. Part plat logam: https://cad.onshape.com/documents/8e1aa343de1bf7fa6c083bbc/w/7a259974efdab04ae0c26d73/e/13ee9b8f674972c2beec1716
+  b. Part pneumatik: https://cad.onshape.com/documents/c4b6b9d279cbf0c6846a7d86/w/614c737ec1ed496024f4d4ac/e/22968ea1e91e252cc1f200bc
+  c. Part extension gripper: https://cad.onshape.com/documents/040458f3b59db5d2da67075f/w/dca44da21eeab6fd05bd78a4/e/393c8749aa2deb36fae57a38
+  d. Assembly: https://cad.onshape.com/documents/87a216fa365f9c18bf820834/w/497dbbf34918285c7d0e2cd3/e/e8a710a9d1816a00fb1de41b
+
+2. Fixture: https://cad.onshape.com/documents/87a216fa365f9c18bf820834/w/497dbbf34918285c7d0e2cd3/e/e8a710a9d1816a00fb1de41b
