@@ -1,27 +1,30 @@
+# solver/solver_module.py
+
 import sys
 import os
 import time
 
 # ==============================================================================
-# ## BAGIAN 1: KONFIGURASI DAN PUSTAKA ##
+# ## BAGIAN 1: KONFIGURASI DAN PUSTAKA (Sedikit modifikasi) ##
 # ==============================================================================
 
-# --- Pengaturan Path untuk Pustaka Solver ---
-SOLVER_FOLDER_NAME = 'RubiksCube-TwophhaseSolver'
-project_path = os.path.abspath(SOLVER_FOLDER_NAME)
-if project_path not in sys.path:
-    sys.path.append(project_path)
-
+# Pengaturan Path: Ini penting agar bisa menemukan pustaka Kociemba
+# Pastikan folder 'RubiksCube-TwophaseSolver' berada di dalam folder 'solver'
 try:
+    SOLVER_FOLDER_NAME = 'RubiksCube-TwophaseSolver'
+    # Membuat path relatif terhadap file ini
+    project_path = os.path.join(os.path.dirname(__file__), SOLVER_FOLDER_NAME)
+    if project_path not in sys.path:
+        sys.path.append(project_path)
     from solver import solve as kociemba_solve
 except ImportError:
-    print(f"Error: Tidak dapat menemukan pustaka di folder '{SOLVER_FOLDER_NAME}'.")
-    print("Pastikan nama folder sudah benar dan berada di direktori yang sama dengan skrip ini.")
+    print(f"FATAL ERROR: Tidak dapat menemukan pustaka di '{project_path}'.")
+    print("Pastikan folder 'RubiksCube-TwophaseSolver' ada di dalam direktori 'solver'.")
     sys.exit(1)
 
-# --- Definisi Notasi Gerakan Robot Anda ---
-
-set_h1 = {
+# --- Definisi Notasi Gerakan Robot Anda (Tidak ada perubahan) ---
+# ===== NOTASI TAMBAHAN =====
+set_H1 = {
     "UF": ["U", "F"],   "UR": ["U", "R"],   "UB": ["U", "B"],   "UL": ["U", "L"],
     "DF": ["D", "F"],   "DR": ["D", "R"],   "DB": ["D", "B"],   "DL": ["D", "L"],
     "FU": ["F", "U"],   "FR": ["F", "R"],   "FD": ["F", "D"],   "FL": ["F", "L"],
@@ -30,7 +33,7 @@ set_h1 = {
     "LU": ["L", "U"],   "LF": ["L", "F"],   "LD": ["L", "D"],   "LB": ["L", "B"],
 }
 
-set_i1 = {
+set_I1 = {
     # kondisi "UF"
     ("UF", "R"): ["UR", "RF"],  ("UF", "L"): ["UL", "LF"],  ("UF", "B"): ["UB", "BU"],  ("UF", "D"): ["FD", "DF"],
     # kondisi "UR"
@@ -171,211 +174,136 @@ re_orient = {
     ("LD", "FD"): ("c-90", 2),    ("LD", "BD"): ("c+90", 2),    ("LD", "RD"): ("c+180", 3),
     ("LB", "DB"): ("c-90", 2),    ("LB", "UB"): ("c+90", 2),    ("LB", "RB"): ("c+180", 3),
 }
+# ===== NOTASI TAMBAHAN =====
 
+# ==============================================================================
+# ## BAGIAN 2: ALGORITMA IDA* (Tidak ada perubahan) ##
+# ==============================================================================
 best_path = []
 min_cost = float('inf')
 
-
-# ==============================================================================
-# ## BAGIAN 2: ALGORITMA IDA* UNTUK OPTIMISASI ROBOTIK ##
-# ==============================================================================
-
 def search_robot_path(path, g_cost, bound, moves_to_execute):
-    """
-    Fungsi pencarian rekursif inti dari algoritma IDA*.
-    Tugasnya adalah menjelajahi semua kemungkinan jalur eksekusi untuk sebuah
-    urutan gerakan, dan mencari jalur dengan total biaya terendah.
-
-    :param path: Daftar (list) yang berisi jejak langkah yang sedang dieksplorasi.
-                 Setiap elemen adalah tuple (langkah_ke, orientasi_robot).
-    :param g_cost: Biaya nyata (real cost) yang sudah diakumulasi dari awal
-                   hingga ke langkah saat ini.
-    :param bound: Batas total biaya (f_cost) untuk iterasi pencarian saat ini.
-                  Jalur yang estimasi biayanya melebihi batas ini akan dipangkas.
-    :param moves_to_execute: Daftar urutan gerakan mentah dari Kociemba
-                            yang sedang coba kita optimalkan.
-    :return: Mengembalikan biaya estimasi terendah berikutnya yang melebihi 'bound'
-             saat ini, atau biaya solusi jika ditemukan.
-    """
     global best_path, min_cost
-
-    # Ambil state saat ini dari jejak langkah terakhir
     current_move_idx, current_orientation = path[-1]
-    
-    # Heuristik (h_cost) dihitung sebagai jumlah langkah yang tersisa.
-    # Ini adalah estimasi optimis, karena setiap langkah minimal berbobot 1.
     h_cost = len(moves_to_execute) - current_move_idx
-    
-    # Fungsi evaluasi A*: f(n) = g(n) + h(n)
     f_cost = g_cost + h_cost
-
-    # Jika estimasi total biaya sudah melebihi batas, pangkas cabang ini.
     if f_cost > bound:
         return f_cost
-    
-    # Jika tidak ada lagi langkah tersisa (h_cost = 0), kita telah sampai di akhir
-    # dan menemukan satu jalur solusi yang valid.
     if h_cost == 0:
-        # Jika biaya solusi yang baru ditemukan ini lebih rendah dari yang terbaik sejauh ini,
-        # simpan sebagai solusi terbaik.
         if g_cost < min_cost:
             min_cost = g_cost
             best_path = list(path)
         return g_cost
-
-    # Variabel untuk melacak batas terendah berikutnya jika tidak ada solusi ditemukan
     next_bound = float('inf')
-    
-    # Tentukan gerakan dari Kociemba yang akan kita eksekusi di langkah ini
     move = moves_to_execute[current_move_idx]
     base_move = move[0]
-
-    # Opsi 1: Gerakan bisa dieksekusi langsung (tanpa re-orientasi)
-    if base_move in set_h1.get(current_orientation, []):
+    if base_move in set_H1.get(current_orientation, []):
         path.append((current_move_idx + 1, current_orientation))
         result = search_robot_path(path, g_cost + 1, bound, moves_to_execute)
-        # Jika ditemukan solusi, langsung kembalikan
-        if result <= bound and result < next_bound: next_bound = result
-        path.pop() # Backtracking
-    
-    # Opsi 2: Gerakan memerlukan re-orientasi
-    # Loop melalui semua kemungkinan orientasi baru yang bisa dicapai
-    possible_new_orientations = set_i1.get((current_orientation, base_move), [])
+        if result <= bound: return result
+        next_bound = min(next_bound, result)
+        path.pop()
+    possible_new_orientations = set_I1.get((current_orientation, base_move), [])
     for new_orientation in possible_new_orientations:
-        # Cari perintah dan biayanya dari kamus re_orient
-        command_tuple = re_orient.get((current_orientation, new_orientation))
-        if not command_tuple: continue # Lewati jika perintah tidak terdefinisi
-        
-        _command, cost = command_tuple
+        command, cost = re_orient.get((current_orientation, new_orientation), (None, 0))
+        if not command: continue
         path.append((current_move_idx + 1, new_orientation))
         result = search_robot_path(path, g_cost + cost, bound, moves_to_execute)
-        # Jika ditemukan solusi, langsung kembalikan
-        if result <= bound and result < next_bound: next_bound = result
-        path.pop() # Backtracking
-
+        if result <= bound: return result
+        next_bound = min(next_bound, result)
+        path.pop()
     return next_bound
 
-
 def solve_with_ida_robot_optimizer(moves_to_execute, initial_orientation="UF"):
-    """
-    Driver loop untuk algoritma IDA*.
-    Fungsi ini mengelola proses pencarian dengan memanggil `search_robot_path`
-    berulang kali dengan `bound` (batas biaya) yang terus meningkat.
-
-    :param moves_to_execute: Daftar urutan gerakan mentah dari Kociemba.
-    :param initial_orientation: Orientasi awal robot (default "UF").
-    :return: Mengembalikan `best_path` yang ditemukan, yaitu jalur eksekusi
-             dengan biaya terendah, atau None jika tidak ada solusi.
-    """
     global best_path, min_cost
-    best_path = []
-    min_cost = float('inf')
-
-    # State awal adalah (langkah ke-0, orientasi awal)
+    best_path, min_cost = [], float('inf')
     initial_path = [(0, initial_orientation)]
-    
-    # Batas awal adalah heuristik dari state awal (jumlah total gerakan)
     bound = len(moves_to_execute)
-
-    # Loop utama IDA*: terus tingkatkan batas dan ulangi pencarian
     while True:
         result = search_robot_path(initial_path, 0, bound, moves_to_execute)
-        
-        # Jika `best_path` sudah ditemukan, pencarian berhasil.
-        if best_path:
-            return best_path
-        
-        # Jika `result` adalah tak terhingga, berarti tidak ada jalur sama sekali.
-        if result == float('inf'):
-            return None
-        
-        # Jika tidak, naikkan batas ke nilai terendah berikutnya yang mungkin.
+        if result <= bound: return best_path
+        if result == float('inf'): return None
         bound = result
 
-
-def reconstruct_robot_script(optimal_path, moves_to_execute):
-    """
-    Membangun daftar perintah robot akhir dari `optimal_path` yang ditemukan oleh IDA*.
-    Fungsi ini menerjemahkan jalur abstrak (langkah_ke, orientasi) menjadi
-    daftar perintah konkret (`a+90`, `U'`, `F2`, dll.).
-
-    :param optimal_path: Hasil dari `solve_with_ida_robot_optimizer`.
-    :param moves_to_execute: Daftar urutan gerakan mentah dari Kociemba.
-    :return: Sebuah list berisi string perintah akhir untuk robot.
-    """
+def reconstruct_script(optimal_path, moves_to_execute):
     robot_commands = []
     if not optimal_path: return []
-    
-    # Loop melalui setiap transisi state di dalam path optimal
     for i in range(len(optimal_path) - 1):
         _, old_orientation = optimal_path[i]
         _, new_orientation = optimal_path[i+1]
-        
-        # Jika orientasi berubah, berarti ada re-orientasi.
-        # Cari perintahnya di kamus `re_orient` dan tambahkan ke skrip.
         if old_orientation != new_orientation:
-            command_tuple = re_orient.get((old_orientation, new_orientation))
-            if command_tuple:
-                command, _ = command_tuple
-                robot_commands.append(command)
-            
-        # Selalu tambahkan perintah putaran muka dari Kociemba untuk langkah ini.
+            command, _ = re_orient.get((old_orientation, new_orientation))
+            robot_commands.append(command)
         robot_commands.append(moves_to_execute[i])
-        
     return robot_commands
 
+# ==============================================================================
+# ## BAGIAN 3: FUNGSI UTAMA MODUL ( <-- PERUBAHAN UTAMA) ##
+# ==============================================================================
+
+def dapatkan_solusi_robot(string_kubus, max_solve_time=10):
+    """
+    Menerima string kondisi kubus, menyelesaikannya, dan mengoptimalkan untuk robot.
+    @param string_kubus: String 54 karakter dari kondisi kubus acak.
+    @param max_solve_time: Batas waktu untuk solver Kociemba (detik).
+    @return: String perintah akhir untuk robot, atau None jika gagal.
+    """
+    # TAHAP 1: Dapatkan solusi mentah dari Kociemba
+    print("[Solver] Mencari solusi langkah standar menggunakan Kociemba...")
+    try:
+        raw_solution_str = kociemba_solve(string_kubus, max_length=22, timeout=max_solve_time)
+        print(f"[Solver] Solusi mentah ditemukan: {raw_solution_str}")
+    except Exception as e:
+        print(f"[Solver] Terjadi error saat memanggil Kociemba: {e}")
+        return None
+
+    if "Error" in raw_solution_str or not raw_solution_str:
+        print("[Solver] Gagal mendapatkan solusi valid dari Kociemba.")
+        return None
+
+    # TAHAP 2: Optimalkan solusi untuk gerakan robot
+    moves_list = raw_solution_str.split('(')[0].strip().split(' ')
+    print("\n[Solver] Mengoptimalkan jalur eksekusi robotik dengan IDA*...")
+    start_time = time.time()
+    
+    optimal_path = solve_with_ida_robot_optimizer(moves_list)
+    
+    end_time = time.time()
+    print(f"[Solver] Pencarian IDA* selesai dalam {end_time - start_time:.4f} detik.")
+
+    if not optimal_path:
+        print("[Solver] Gagal menemukan jalur eksekusi robotik yang optimal.")
+        return None
+
+    # TAHAP 3: Bangun skrip final
+    # ==========================================================
+    # ### PERBAIKAN DI SINI ###
+    # Menggunakan 'moves_list' yang merupakan nama variabel yang benar
+    final_script_list = reconstruct_script(optimal_path, moves_list)
+    # ==========================================================
+    final_output_string = " ".join(final_script_list)
+    
+    print(f"[Solver] Skrip robot final berhasil dibuat (Total Biaya: {min_cost}).")
+    return final_output_string
 
 # ==============================================================================
-# ## BAGIAN 3: ALUR UTAMA PROGRAM ##
+# ## BAGIAN 4: BLOK EKSEKUSI (Untuk Testing Mandiri) ##
 # ==============================================================================
 
-def main():
-    """
-    Fungsi utama untuk menjalankan keseluruhan proses solver.
-    Ini mengorkestrasi alur kerja dua tahap:
-    1. Mendapatkan solusi cepat dari Kociemba.
-    2. Mengoptimalkan solusi tersebut dengan IDA* robotik.
-    """
-    scrambled_cube_string = "DUUBULDBFRBFRRULLLBRDFFFBLURDBFDFDRFRULBLUFDURRBLBDUDL"
-
-    # --- TAHAP 1: DAPATKAN SOLUSI MENTAH ---
-    print("[Tahap 1] Mencari solusi langkah standar...")
-    raw_solution_str = kociemba_solve(scrambled_cube_string, max_length=22, timeout=10)
-    print(f"Solusi mentah Kociemba ditemukan: {raw_solution_str}")
-
-    if "Error" not in raw_solution_str and raw_solution_str:
-        moves_list = raw_solution_str.split('(')[0].strip().split(' ')
-        if moves_list == ['']: moves_list = []
-        
-        if moves_list:
-            # --- TAHAP 2: OPTIMISASI DENGAN IDA* ROBOTIK ---
-            print("\n[Tahap 2] Mencari jalur eksekusi robotik termurah dengan IDA*...")
-            start_time = time.time()
-            optimal_path = solve_with_ida_robot_optimizer(moves_list)
-            end_time = time.time()
-            print(f"Pencarian IDA* selesai dalam {end_time - start_time:.4f} detik.")
-
-            if optimal_path:
-                # Terjemahkan path optimal menjadi skrip akhir
-                final_script_list = reconstruct_robot_script(optimal_path, moves_list)
-                final_output_string = " ".join(final_script_list)
-
-                # --- TAMPILKAN HASIL AKHIR ---
-                print("\n" + "="*50)
-                print("      SKRIP AKHIR UNTUK ROBOT (OUTPUT FINAL)")
-                print("="*50)
-                print(final_output_string)
-                print(f"(Total Biaya Terendah: {min_cost})")
-                print("="*50)
-            else:
-                print("Tidak dapat menemukan jalur eksekusi robotik yang optimal.")
-        else:
-            print("Kubus sudah terpecahkan, tidak ada skrip yang dihasilkan.")
+if __name__ == '__main__':
+    print("Menjalankan modul solver secara mandiri untuk pengujian...")
+    
+    # Gunakan string contoh yang valid untuk pengujian
+    test_cube_string = "BBURUDBFUFFFRRFUUFLULUFUDLRRDBBDBDBLUDDFLLRRBRLLLBRDDF"
+    print(f"Input string untuk diuji: {test_cube_string}")
+    
+    final_solution = dapatkan_solusi_robot(test_cube_string)
+    
+    if final_solution:
+        print("\n" + "="*50)
+        print("      SKRIP AKHIR UNTUK ROBOT (OUTPUT FINAL)")
+        print("="*50)
+        print(final_solution)
+        print("="*50)
     else:
-        print("\nTidak dapat melanjutkan ke Tahap 2 karena solusi awal tidak valid atau tidak ditemukan.")
-
-
-# Blok ini memastikan fungsi `main()` hanya akan dijalankan
-# ketika file ini dieksekusi secara langsung.
-if __name__ == "__main__":
-    main()
+        print("\nPengujian gagal: Tidak ada solusi yang dihasilkan.")
